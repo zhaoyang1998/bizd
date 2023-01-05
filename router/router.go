@@ -2,6 +2,7 @@ package router
 
 import (
 	"bizd/metion"
+	"bizd/metion/service"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	jsoniter "github.com/json-iterator/go"
@@ -85,6 +86,37 @@ func menuInfo(c *gin.Context) {
 	c.JSON(http.StatusOK, `{"code":0,"data":{"id":2,"username":"demo1","nickname":"demo1","avatar":"http://admin.gumingchen.icu/file/d6cddc7f-9d67-4366-bc8e-ecad19e1bf76.webp","mobile":"13777777777","email":"1240235512@qq.com","sex":1,"status":1,"supervisor":0,"roles":[{"id":1,"name":"Demo","permission":5,"custom":""}],"token":"28263720307e1a0fcfbdbd021b26f062","department_id":2,"enterprise_id":1,"created_at":"2022-07-15 14:18:02","updated_at":"2022-11-29 13:29:33","department_name":"前端开发部门","department_permission":4,"department_custom":"1"},"message":"成功！","status":"success"}`)
 }
 
+func getUsers(context *gin.Context) {
+	service.GetUsers(context)
+}
+
+func addUser(context *gin.Context) {
+	service.AddUser(context)
+}
+func updateUser(context *gin.Context) {
+	service.UpdateUser(context)
+}
+
+func delUser(context *gin.Context) {
+	service.DelUser(context)
+}
+
+func addClient(c *gin.Context) {
+	service.AddClient(c)
+}
+
+func getClients(c *gin.Context) {
+	service.GetClients(c)
+}
+
+func delClient(context *gin.Context) {
+	service.DelClient(context)
+}
+
+func updateClient(context *gin.Context) {
+	service.UpdateClient(context)
+}
+
 // SetupRouter 配置路由信息
 func SetupRouter() *gin.Engine {
 
@@ -94,11 +126,21 @@ func SetupRouter() *gin.Engine {
 	// default
 	r.GET("/test", test)
 
-	//登录获取token
+	// 登录获取token
 	r.POST("/slipper/admin/login", login)
 
-	//获取路由信息
+	// 获取路由信息
 	r.GET("/slipper/admin/administrator/self/info", menuInfo)
+	// 用户接口
+	r.POST("/user/getUsersByType", getUsers)
+	r.POST("/user/addUser", addUser)
+	r.POST("/user/updateUser", updateUser)
+	r.POST("/user/delUser", delUser)
 
+	// 客户接口
+	r.POST("/client/addClient", addClient)
+	r.POST("/client/getClients", getClients)
+	r.POST("/client/updateClient", updateClient)
+	r.POST("/client/delClient", delClient)
 	return r
 }

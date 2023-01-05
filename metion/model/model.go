@@ -1,5 +1,9 @@
 package model
 
+import (
+	"time"
+)
+
 type Conductor struct {
 	Id          int `gorm:"primaryKey"`
 	Username    string
@@ -8,8 +12,102 @@ type Conductor struct {
 	Seq         int
 }
 
-// 对应数据库中的表名
+type Client struct {
+	// 客户唯一编码
+	ClientId string `gorm:"primaryKey" json:"clientId" form:"clientId"`
+	// 客户名称
+	ClientName string `json:"clientName" form:"clientName" validate:"required"`
+	// 客户简称
+	ClientAbbreviation string `json:"clientAbbreviation" form:"clientAbbreviation" validate:"required"`
+	// canvas账号
+	CanvasAccount string `json:"canvasAccount" form:"canvasAccount"`
+	// canvas密码
+	CanvasPwd string `json:"canvasPwd" form:"canvasPwd"`
+	// 客户资料连接
+	DataLink string `json:"dataLink" form:"dataLink"`
+	// 负责人ID
+	PrincipalId string `json:"principalId" form:"principalId" validate:"required"`
+	// 客户状态： 实施未开始、进行中、已完成:10,11,12 POC未开始、进行中、已完成:20,21,22
+	Status int `json:"status" form:"status" validate:"required"`
+}
+
+type Company struct {
+	// 单位ID
+	CompanyId string `gorm:"primaryKey" json:"companyId" form:"companyId"`
+	// 单位名称
+	CompanyName string `json:"companyName" form:"companyName"`
+	// 所属客户ID
+	ClientId string `json:"clientId" form:"clientId"`
+	// 创建者id
+	UserId string `json:"userId" form:"userId"`
+	// 单位地址
+	Address string `json:"address" form:"address"`
+	// 实施类型 0：调研 1：正式实施 2：POC
+	Type int `json:"type" form:"type"`
+	// 人数
+	PeopleNumbers int `json:"peopleNumbers" form:"peopleNumbers"`
+	// 预计实施时间
+	ScheduledTime time.Time `json:"scheduledTime" form:"scheduledTime"`
+	// 实施人员
+	ImplementerId string `json:"implementerId" form:"implementerId"`
+	// 调研人员
+	ResearchAnalystId string `json:"researchAnalystId" form:"researchAnalystId"`
+	// ip规划
+	Ip string `json:"ip" form:"ip"`
+	// CpeName
+	CpeName string `json:"cpeName" form:"cpeName"`
+	// 状态，调研未开始、进行中、已完成:0,1,2 实施未开始、进行中、已完成:10,11,12 POC未开始、进行中、已完成:20,21,22
+	Status int `json:"status" form:"status"`
+	// 实施资链接
+	DataLink string `json:"dataLink" form:"dataLink"`
+	// 备注
+	Remark string `json:"remark" form:"remark"`
+	// 开始时间
+	StartTime time.Time `json:"startTime" form:"startTime"`
+	// 结束时间
+	EndTime time.Time `json:"endTime" form:"endTime"`
+}
+
+type User struct {
+	// 用户id
+	UserId string `gorm:"primaryKey" json:"userId" form:"userId"`
+	// 用户名
+	UserName string `json:"userName" form:"userName" validate:"required"`
+	// 密码
+	UserPwd string `json:"userPwd" form:"userPwd" validate:"required"`
+	// 微信名称
+	WxName string `json:"wxName" form:"wxName" validate:"required"`
+	// 人员类型 0：交付 1：项目管理
+	Type int `json:"type" form:"type" validate:"required"`
+	// 优先级
+	Priority int `json:"priority" form:"priority"`
+	// 当前工作量
+	CurrentWorkload int `json:"currentWorkload" form:"currentWorkload"`
+}
+
+type Response struct {
+	// 状态码
+	Code int `json:"code"`
+	// 数据
+	Data string `json:"data"`
+	// 提示消息
+	Message string `json:"message"`
+}
+
+// TableName 对应数据库中的表名
 
 func (Conductor) TableName() string {
 	return "t_conductor"
+}
+
+func (Client) TableName() string {
+	return "t_client"
+}
+
+func (Company) TableName() string {
+	return "t_company"
+}
+
+func (User) TableName() string {
+	return "t_user"
 }

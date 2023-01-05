@@ -42,6 +42,7 @@ func (m MyClaim) Valid() error {
 }
 
 //创建token
+
 func CreateToken(userid int, username interface{}) (s string, err error) {
 
 	// Create the Claims
