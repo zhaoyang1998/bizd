@@ -45,3 +45,9 @@ func SendConductorMessage(conductorInfo model.Conductor) {
 	info := "开周会啦！ 这周轮到你主持" + "<font color='#dd0000'>" + conductorInfo.Username + "</font>\n" + "<@" + conductorInfo.WxName + ">"
 	SendWxMessage(info, url)
 }
+
+func SendTimeNotice(MsgFromCron model.MsgFromCron) {
+	url := MsgFromCron.Receive
+	info := "test"
+	SendWxMessage(info, url)
+}

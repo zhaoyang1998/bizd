@@ -6,6 +6,7 @@ import (
 	"bizd/metion/utils"
 	"bizd/router"
 	"fmt"
+	"github.com/jakecoffman/cron"
 )
 
 func main() {
@@ -14,7 +15,11 @@ func main() {
 	// 初始化数据库连接
 	_ = db.InitGormDB()
 	// 开启定时任务
-	go timedTask.StartTimedTask()
+	task := &timedTask.Task{}
+	task.CronTask = cron.New()
+	task.InitCron()
+	go task.CronTask.Start()
+
 	router := router.SetupRouter()
 	if err := router.Run(":8888"); err != nil {
 		fmt.Println("startup service failed, err:%v\n", err)
