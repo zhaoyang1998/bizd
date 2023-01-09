@@ -90,6 +90,10 @@ func getUsers(context *gin.Context) {
 	service.GetUsers(context)
 }
 
+func getUsersByType(context *gin.Context) {
+	service.GetUserByType(context)
+}
+
 func addUser(context *gin.Context) {
 	service.AddUser(context)
 }
@@ -117,6 +121,34 @@ func updateClient(context *gin.Context) {
 	service.UpdateClient(context)
 }
 
+func delCompany(context *gin.Context) {
+	service.DelCompany(context)
+}
+
+func updateCompany(context *gin.Context) {
+	service.UpdateCompany(context)
+}
+
+func getCompanies(context *gin.Context) {
+	service.GetCompanies(context)
+}
+
+func addCompany(context *gin.Context) {
+	service.AddCompany(context)
+}
+
+func finishAssignment(context *gin.Context) {
+	service.FinishAssignment(context)
+}
+
+func startAssignment(context *gin.Context) {
+	service.StartAssignment(context)
+}
+
+func allocatingAssignment(context *gin.Context) {
+	service.AllocatingAssignment(context)
+}
+
 // SetupRouter 配置路由信息
 func SetupRouter() *gin.Engine {
 
@@ -127,20 +159,31 @@ func SetupRouter() *gin.Engine {
 	r.GET("/test", test)
 
 	// 登录获取token
-	r.POST("/slipper/admin/login", login)
+	r.POST("/admin/login", login)
 
 	// 获取路由信息
-	r.GET("/slipper/admin/administrator/self/info", menuInfo)
-	// 用户接口
-	r.POST("/user/getUsersByType", getUsers)
+	r.GET("/admin/administrator/self/info", menuInfo)
+
+	// 用户相关接口
+	r.POST("/user/getUsers", getUsers)
+	r.POST("/user/getUsersByType", getUsersByType)
 	r.POST("/user/addUser", addUser)
 	r.POST("/user/updateUser", updateUser)
 	r.POST("/user/delUser", delUser)
 
-	// 客户接口
+	// 客户相关接口
 	r.POST("/client/addClient", addClient)
 	r.POST("/client/getClients", getClients)
 	r.POST("/client/updateClient", updateClient)
 	r.POST("/client/delClient", delClient)
+
+	// 单位相关接口
+	r.POST("/company/addCompany", addCompany)
+	r.POST("/company/getCompanies", getCompanies)
+	r.POST("/company/updateCompany", updateCompany)
+	r.POST("/company/delCompany", delCompany)
+	r.POST("/company/startAssignment", startAssignment)
+	r.POST("/company/finishAssignment", finishAssignment)
+	r.POST("/company/allocatingAssignment", allocatingAssignment)
 	return r
 }

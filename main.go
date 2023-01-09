@@ -12,7 +12,7 @@ func main() {
 	// 开启日志
 	utils.SetupLogger()
 	// 初始化数据库连接
-	db.InitGormDB()
+	_ = db.InitGormDB()
 	// 开启定时任务
 	go timedTask.StartTimedTask()
 	router := router.SetupRouter()

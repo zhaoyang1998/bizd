@@ -29,29 +29,31 @@ type Client struct {
 	PrincipalId string `json:"principalId" form:"principalId" validate:"required"`
 	// 客户状态： 实施未开始、进行中、已完成:10,11,12 POC未开始、进行中、已完成:20,21,22
 	Status int `json:"status" form:"status" validate:"required"`
+	// 分页参数
+	Pagination
 }
 
 type Company struct {
 	// 单位ID
 	CompanyId string `gorm:"primaryKey" json:"companyId" form:"companyId"`
 	// 单位名称
-	CompanyName string `json:"companyName" form:"companyName"`
+	CompanyName string `json:"companyName" form:"companyName" validate:"required"`
 	// 所属客户ID
-	ClientId string `json:"clientId" form:"clientId"`
+	ClientId string `json:"clientId" form:"clientId" validate:"required"`
 	// 创建者id
 	UserId string `json:"userId" form:"userId"`
 	// 单位地址
-	Address string `json:"address" form:"address"`
+	Address string `json:"address" form:"address" validate:"required"`
 	// 实施类型 0：调研 1：正式实施 2：POC
-	Type int `json:"type" form:"type"`
+	Type int `json:"type" form:"type" validate:"required" validate:"required"`
 	// 人数
-	PeopleNumbers int `json:"peopleNumbers" form:"peopleNumbers"`
+	PeopleNumbers int `json:"peopleNumbers" form:"peopleNumbers" validate:"required"`
 	// 预计实施时间
 	ScheduledTime time.Time `json:"scheduledTime" form:"scheduledTime"`
-	// 实施人员
+	// 人员
 	ImplementerId string `json:"implementerId" form:"implementerId"`
-	// 调研人员
-	ResearchAnalystId string `json:"researchAnalystId" form:"researchAnalystId"`
+	// 人员名称
+	ImplementerName string `json:"implementerName" form:"implementerName"`
 	// ip规划
 	Ip string `json:"ip" form:"ip"`
 	// CpeName
@@ -66,6 +68,8 @@ type Company struct {
 	StartTime time.Time `json:"startTime" form:"startTime"`
 	// 结束时间
 	EndTime time.Time `json:"endTime" form:"endTime"`
+	// 分页参数
+	Pagination
 }
 
 type User struct {
@@ -83,6 +87,8 @@ type User struct {
 	Priority int `json:"priority" form:"priority"`
 	// 当前工作量
 	CurrentWorkload int `json:"currentWorkload" form:"currentWorkload"`
+	// 分页参数
+	Pagination
 }
 
 type Response struct {
@@ -92,6 +98,10 @@ type Response struct {
 	Data string `json:"data"`
 	// 提示消息
 	Message string `json:"message"`
+}
+type Pagination struct {
+	PageSize   int `json:"pageSize" form:"pageSize,default=10" gorm:"-"`
+	PageNumber int `json:"pageNumber" form:"pageNumber,default=1" gorm:"-"`
 }
 
 // TableName 对应数据库中的表名

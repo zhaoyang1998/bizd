@@ -4,8 +4,8 @@ import (
 	"bizd/metion/model"
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io"
+	"log"
 	"net/http"
 )
 
@@ -29,8 +29,9 @@ func SendWxMessage(contentInfo string, url string) {
 	data, _ := json.Marshal(reqParam)
 	res, err := http.Post(url, "application/json", bytes.NewBuffer(data))
 	if err != nil {
-		fmt.Println("Fatal error ", err.Error())
+		log.Print("信息发送失败，内容：" + contentInfo + "机器人地址：" + url + "错误信息：" + url)
 	}
+	log.Print("信息发送成功，内容：" + contentInfo + "机器人地址：" + url)
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
