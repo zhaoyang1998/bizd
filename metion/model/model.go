@@ -104,6 +104,17 @@ type Pagination struct {
 	PageNumber int `json:"pageNumber" form:"pageNumber,default=1" gorm:"-"`
 }
 
+// MsgFromCron 来获取Cron库的数据
+type MsgFromCron struct {
+	Id          int    `json:"id"`
+	Name        string `json:"name"`
+	CronTime    string `json:"cronTime"`
+	Receive     string `json:"receive"`
+	ReceiveType string `json:"receiveType"`
+	Tags        string `json:"tags"`
+	IsSend      int    `json:"isSend"`
+}
+
 // TableName 对应数据库中的表名
 
 func (Conductor) TableName() string {
@@ -120,4 +131,8 @@ func (PointPosition) TableName() string {
 
 func (User) TableName() string {
 	return "t_user"
+}
+
+func (MsgFromCron) TableName() string {
+	return "t_cron"
 }
