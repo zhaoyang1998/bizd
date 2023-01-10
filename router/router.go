@@ -121,20 +121,20 @@ func updateClient(context *gin.Context) {
 	service.UpdateClient(context)
 }
 
-func delCompany(context *gin.Context) {
-	service.DelCompany(context)
+func delPointPosition(context *gin.Context) {
+	service.DelPointPosition(context)
 }
 
-func updateCompany(context *gin.Context) {
-	service.UpdateCompany(context)
+func updatePointPosition(context *gin.Context) {
+	service.UpdatePointPosition(context)
 }
 
-func getCompanies(context *gin.Context) {
-	service.GetCompanies(context)
+func getPointPosition(context *gin.Context) {
+	service.GetPointPosition(context)
 }
 
-func addCompany(context *gin.Context) {
-	service.AddCompany(context)
+func addPointPosition(context *gin.Context) {
+	service.AddPointPosition(context)
 }
 
 func finishAssignment(context *gin.Context) {
@@ -178,12 +178,12 @@ func SetupRouter() *gin.Engine {
 	r.POST("/client/delClient", delClient)
 
 	// 单位相关接口
-	r.POST("/company/addCompany", addCompany)
-	r.POST("/company/getCompanies", getCompanies)
-	r.POST("/company/updateCompany", updateCompany)
-	r.POST("/company/delCompany", delCompany)
-	r.POST("/company/startAssignment", startAssignment)
-	r.POST("/company/finishAssignment", finishAssignment)
-	r.POST("/company/allocatingAssignment", allocatingAssignment)
+	r.POST("/pointPosition/addPointPosition", addPointPosition)
+	r.POST("/pointPosition/getPointPosition", getPointPosition)
+	r.POST("/pointPosition/updatePointPosition", updatePointPosition)
+	r.POST("/pointPosition/delPointPosition", delPointPosition)
+	r.POST("/pointPosition/startAssignment", startAssignment)
+	r.POST("/pointPosition/finishAssignment", finishAssignment)
+	r.POST("/pointPosition/allocatingAssignment", allocatingAssignment)
 	return r
 }

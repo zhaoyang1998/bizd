@@ -3,30 +3,34 @@ package service
 import (
 	"bizd/metion/db"
 	"bizd/metion/model"
+	"bizd/metion/utils"
 	"encoding/json"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
 	"log"
 	"net/http"
-	"time"
 )
 
-func AddCompany(c *gin.Context) {
-	var company model.Company
-	_ = c.Bind(&company)
+func AddPointPosition(c *gin.Context) {
+	var pointPosition model.PointPosition
+
+	er := c.ShouldBindJSON(&pointPosition)
+	fmt.Println(er)
+	fmt.Printf("%+v", pointPosition)
 	// 参数验证
 	validate := validator.New()
-	err := validate.Struct(company)
+	err := validate.Struct(pointPosition)
 	if err != nil {
 		log.Print(err.Error())
 		c.JSON(200, gin.H{"code": 201, "msg": err.Error()})
 		return
 	}
-	company.CompanyId = uuid.NewV4().String()
-	company.Status = company.Type * 10
-	result := db.DB.Create(company)
+	pointPosition.PointPositionId = uuid.NewV4().String()
+	pointPosition.Status = pointPosition.Type * 10
+	result := db.DB.Create(pointPosition)
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -40,11 +44,14 @@ func AddCompany(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func GetCompanies(c *gin.Context) {
-	var company model.Company
-	_ = c.Bind(&company)
-	var companies []model.Company
-	result := db.DB.Offset((company.PageNumber - 1) * company.PageSize).Limit(company.PageSize).Where(company).Find(&companies)
+func GetPointPosition(c *gin.Context) {
+	var pointPosition model.PointPosition
+	_ = c.Bind(&pointPosition)
+	var pointPositions []model.PointPosition
+	result := db.DB.Joins("left join t_user on t_user.user_id = t_point_position.implementer_id").
+		Joins("left join t_user t1 on t1.user_id = t_point_position.user_id").
+		Joins("left join t_client client on client.client_id = t_point_position.client_id").
+		Select("t_point_position.*, t_user.user_name as implementer_name, t1.user_name as user_name, client.client_abbreviation as client_abbreviation").Offset((pointPosition.PageNumber - 1) * pointPosition.PageSize).Limit(pointPosition.PageSize).Where(pointPosition).Find(&pointPositions)
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -53,24 +60,24 @@ func GetCompanies(c *gin.Context) {
 		return
 	}
 	var response model.Response
-	data, _ := json.Marshal(companies)
+	data, _ := json.Marshal(pointPositions)
 	response.Data = string(data)
 	response.Code = http.StatusOK
 	response.Message = "请求成功"
 	c.JSON(http.StatusOK, response)
 }
 
-func DelCompany(c *gin.Context) {
+func DelPointPosition(c *gin.Context) {
 	var response model.Response
-	var company model.Company
-	_ = c.Bind(&company)
-	if company.CompanyId == "" {
+	var pointPosition model.PointPosition
+	_ = c.Bind(&pointPosition)
+	if pointPosition.PointPositionId == "" {
 		response.Code = http.StatusCreated
 		response.Message = "单位ID不能为空"
 		c.JSON(http.StatusOK, response)
 		return
 	}
-	result := db.DB.Delete(&company)
+	result := db.DB.Delete(&pointPosition)
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -83,11 +90,11 @@ func DelCompany(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func UpdateCompany(c *gin.Context) {
+func UpdatePointPosition(c *gin.Context) {
 	var response model.Response
-	var company model.Company
-	_ = c.Bind(&company)
-	result := db.DB.Model(&company).Updates(&company)
+	var pointPosition model.PointPosition
+	_ = c.Bind(&pointPosition)
+	result := db.DB.Model(&pointPosition).Updates(&pointPosition)
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -102,14 +109,15 @@ func UpdateCompany(c *gin.Context) {
 
 func StartAssignment(c *gin.Context) {
 	var response model.Response
-	var company model.Company
-	company.CompanyId = c.Query("companyId")
-	if company.CompanyId == "" {
+	var pointPosition model.PointPosition
+	pointPosition.PointPositionId = c.Query("pointPositionId")
+	if pointPosition.PointPositionId == "" {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "参数不能为空",
 		})
 	}
-	result := db.DB.Model(&company).Where(gorm.Expr("status % 10 = 0")).Updates(map[string]interface{}{"status": gorm.Expr("status + 1"), "start_time": time.Now()})
+	result := db.DB.Model(&pointPosition).Where(gorm.Expr("status % 10 = 0")).Updates(map[string]interface{}{"status": gorm.Expr("status + 1"),
+		"start_time": utils.GetNowTime(), "current_workload": gorm.Expr("current_workload + 1")})
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -124,14 +132,15 @@ func StartAssignment(c *gin.Context) {
 
 func FinishAssignment(c *gin.Context) {
 	var response model.Response
-	var company model.Company
-	company.CompanyId = c.Query("companyId")
-	if company.CompanyId == "" {
+	var pointPosition model.PointPosition
+	pointPosition.PointPositionId = c.Query("pointPositionId")
+	if pointPosition.PointPositionId == "" {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "参数不能为空",
 		})
 	}
-	result := db.DB.Model(&company).Where(gorm.Expr("status % 10 = 1")).Updates(map[string]interface{}{"status": gorm.Expr("status + 1"), "end_time": time.Now()})
+	result := db.DB.Model(&pointPosition).Where(gorm.Expr("status % 10 = 1")).Updates(map[string]interface{}{"status": gorm.Expr("status + 1"), "end_time": utils.GetNowTime(),
+		"current_workload": gorm.Expr("current_workload - 1")})
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -146,9 +155,9 @@ func FinishAssignment(c *gin.Context) {
 
 func AllocatingAssignment(c *gin.Context) {
 	var response model.Response
-	var company model.Company
-	_ = c.Bind(&company)
-	result := db.DB.Model(&company).Updates(&company)
+	var pointPosition model.PointPosition
+	_ = c.Bind(&pointPosition)
+	result := db.DB.Model(&pointPosition).Updates(&pointPosition)
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{

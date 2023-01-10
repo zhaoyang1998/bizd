@@ -1,9 +1,5 @@
 package model
 
-import (
-	"time"
-)
-
 type Conductor struct {
 	Id          int `gorm:"primaryKey"`
 	Username    string
@@ -33,29 +29,33 @@ type Client struct {
 	Pagination
 }
 
-type Company struct {
+type PointPosition struct {
 	// 单位ID
-	CompanyId string `gorm:"primaryKey" json:"companyId" form:"companyId"`
+	PointPositionId string `gorm:"primaryKey" json:"pointPositionId" form:"pointPositionId"`
 	// 单位名称
-	CompanyName string `json:"companyName" form:"companyName" validate:"required"`
+	PointPositionName string `json:"pointPositionName" form:"pointPositionName" validate:"required"`
 	// 所属客户ID
 	ClientId string `json:"clientId" form:"clientId" validate:"required"`
+	// 客户名称
+	ClientAbbreviation string `json:"clientAbbreviation" form:"clientAbbreviation" gorm:"-"`
 	// 创建者id
 	UserId string `json:"userId" form:"userId"`
+	// 创建者名称
+	UserName string `json:"userName" form:"userName" gorm:"-"`
 	// 单位地址
 	Address string `json:"address" form:"address" validate:"required"`
+	// ip规划
+	Ip string `json:"ip" form:"ip"`
 	// 实施类型 0：调研 1：正式实施 2：POC
-	Type int `json:"type" form:"type" validate:"required" validate:"required"`
+	Type int `json:"type" form:"type" validate:"required"`
 	// 人数
 	PeopleNumbers int `json:"peopleNumbers" form:"peopleNumbers" validate:"required"`
 	// 预计实施时间
-	ScheduledTime time.Time `json:"scheduledTime" form:"scheduledTime"`
+	ScheduledTime string `json:"scheduledTime" form:"scheduledTime"`
 	// 人员
 	ImplementerId string `json:"implementerId" form:"implementerId"`
 	// 人员名称
-	ImplementerName string `json:"implementerName" form:"implementerName"`
-	// ip规划
-	Ip string `json:"ip" form:"ip"`
+	ImplementerName string `json:"implementerName" form:"implementerName" gorm:"-"`
 	// CpeName
 	CpeName string `json:"cpeName" form:"cpeName"`
 	// 状态，调研未开始、进行中、已完成:0,1,2 实施未开始、进行中、已完成:10,11,12 POC未开始、进行中、已完成:20,21,22
@@ -65,9 +65,9 @@ type Company struct {
 	// 备注
 	Remark string `json:"remark" form:"remark"`
 	// 开始时间
-	StartTime time.Time `json:"startTime" form:"startTime"`
+	StartTime string `json:"startTime" form:"startTime"`
 	// 结束时间
-	EndTime time.Time `json:"endTime" form:"endTime"`
+	EndTime string `json:"endTime" form:"endTime"`
 	// 分页参数
 	Pagination
 }
@@ -114,8 +114,8 @@ func (Client) TableName() string {
 	return "t_client"
 }
 
-func (Company) TableName() string {
-	return "t_company"
+func (PointPosition) TableName() string {
+	return "t_point_position"
 }
 
 func (User) TableName() string {
