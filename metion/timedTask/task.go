@@ -20,7 +20,7 @@ type Task struct {
 	CronCount int
 }
 
-//初始化数据库的定时任务
+// 初始化数据库的定时任务
 func (task *Task) InitCron() {
 
 	//初始定时任务 初始化时 将任务总数记为0
@@ -46,7 +46,7 @@ func (task *Task) InitCron() {
 	//fmt.Println(c.Entries())
 }
 
-//重新初始化任务
+// 重新初始化任务
 func (task *Task) ResetTask() error {
 
 	//删除原来所有的任务
@@ -59,7 +59,7 @@ func (task *Task) ResetTask() error {
 	return nil
 }
 
-//添加task任务
+// 添加task任务
 func (task *Task) AddTask(MsgFromCron model.MsgFromCron) error {
 	if MsgFromCron.IsSend == SendTureInCron {
 		task.CronTask.AddFunc(MsgFromCron.CronTime, func() {
