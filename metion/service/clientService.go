@@ -1,7 +1,7 @@
 package service
 
 import (
-	"bizd/metion/db"
+	"bizd/metion/global"
 	"bizd/metion/model"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
@@ -14,7 +14,7 @@ import (
 
 func AddClient(c *gin.Context) {
 	var client model.Client
-	_ = c.Bind(&client)
+	_ = c.ShouldBindJSON(&client)
 	// 参数验证
 	validate := validator.New()
 	err := validate.Struct(client)
@@ -24,7 +24,7 @@ func AddClient(c *gin.Context) {
 		return
 	}
 	client.ClientId = uuid.NewV4().String()
-	result := db.DB.Create(client)
+	result := global.DB.Create(client)
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -40,9 +40,9 @@ func AddClient(c *gin.Context) {
 
 func GetClients(c *gin.Context) {
 	var client model.Client
-	_ = c.Bind(&client)
+	_ = c.ShouldBindJSON(&client)
 	var clients []model.Client
-	result := db.DB.Select("client_id,client_name,client_abbreviation,data_link,principal_id,status").Where(client).Find(&clients)
+	result := global.DB.Select("client_id,client_name,client_abbreviation,data_link,principal_id,status").Where(client).Find(&clients)
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -61,14 +61,14 @@ func GetClients(c *gin.Context) {
 func DelClient(c *gin.Context) {
 	var response model.Response
 	var client model.Client
-	_ = c.Bind(&client)
+	_ = c.ShouldBindJSON(&client)
 	if client.ClientId == "" {
 		response.Code = http.StatusCreated
 		response.Message = "客户ID不能为空"
 		c.JSON(http.StatusOK, response)
 		return
 	}
-	result := db.DB.Delete(&client)
+	result := global.DB.Delete(&client)
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -84,8 +84,8 @@ func DelClient(c *gin.Context) {
 func UpdateClient(c *gin.Context) {
 	var response model.Response
 	var client model.Client
-	_ = c.Bind(&client)
-	result := db.DB.Model(&client).Updates(&client)
+	_ = c.ShouldBindJSON(&client)
+	result := global.DB.Model(&client).Updates(&client)
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{

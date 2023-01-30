@@ -1,5 +1,7 @@
 package model
 
+import "github.com/jakecoffman/cron"
+
 type Conductor struct {
 	Id          int `gorm:"primaryKey"`
 	Username    string
@@ -47,9 +49,9 @@ type PointPosition struct {
 	// ip规划
 	Ip string `json:"ip" form:"ip"`
 	// 实施类型 0：调研 1：正式实施 2：POC
-	Type int `json:"type" form:"type" validate:"required"`
+	Type *int `json:"type" form:"type" validate:"required"`
 	// 人数
-	PeopleNumbers int `json:"peopleNumbers" form:"peopleNumbers" validate:"required"`
+	PeopleNumbers *int `json:"peopleNumbers" form:"peopleNumbers" validate:"required"`
 	// 预计实施时间
 	ScheduledTime string `json:"scheduledTime" form:"scheduledTime"`
 	// 人员
@@ -59,7 +61,7 @@ type PointPosition struct {
 	// CpeName
 	CpeName string `json:"cpeName" form:"cpeName"`
 	// 状态，调研未开始、进行中、已完成:0,1,2 实施未开始、进行中、已完成:10,11,12 POC未开始、进行中、已完成:20,21,22
-	Status int `json:"status" form:"status"`
+	Status *int `gorm:"FORCE" json:"status" form:"status"`
 	// 实施资链接
 	DataLink string `json:"dataLink" form:"dataLink"`
 	// 备注
@@ -106,13 +108,21 @@ type Pagination struct {
 
 // MsgFromCron 来获取Cron库的数据
 type MsgFromCron struct {
-	Id          int    `json:"id"`
+	Id          string `json:"id"`
 	Name        string `json:"name"`
 	CronTime    string `json:"cronTime"`
 	Receive     string `json:"receive"`
 	ReceiveType string `json:"receiveType"`
-	Tags        string `json:"tags"`
-	IsSend      int    `json:"isSend"`
+	// 0：任务分配提醒  1：任务开始提醒   2：任务超时未开始提醒
+	Type            int    `json:"type"`
+	IsSend          int    `json:"isSend"`
+	WxName          string `json:"wxName"`
+	PointPositionId string `json:"pointPositionId"`
+	ScheduledTime   string `json:"scheduledTime" gorm:"-"`
+}
+type Task struct {
+	CronTask  *cron.Cron
+	CronCount int
 }
 
 // TableName 对应数据库中的表名

@@ -1,37 +1,27 @@
 package timedTask
 
 import (
-	"bizd/metion/db"
+	"bizd/metion/global"
 	"bizd/metion/model"
 	"bizd/metion/utils"
 	"errors"
-	"github.com/jakecoffman/cron"
-	"github.com/spf13/cast"
+	uuid "github.com/satori/go.uuid"
 	"log"
+	"strings"
 )
-
-const (
-	SendTureInCron  = 0
-	SendFalseInCron = 1
-)
-
-type Task struct {
-	CronTask  *cron.Cron
-	CronCount int
-}
 
 // 初始化数据库的定时任务
-func (task *Task) InitCron() {
+func InitCron() {
 
 	//初始定时任务 初始化时 将任务总数记为0
-	task.CronCount = 0
+	global.Tasks.CronCount = 0
 	//定义 最终返回的gc
 	//初始化一个错误
 
 	err := errors.New("")
 	err = nil
 
-	msgFromAs, err := QueryMsgFromCron(db.DB)
+	msgFromAs, err := QueryMsgFromCron(global.DB)
 	if err != nil {
 		log.Println("在初始化定时任务的时候 获取A表数据失败")
 		return
@@ -41,43 +31,73 @@ func (task *Task) InitCron() {
 		//添加变量 来解决循环 拷贝问题  就是会重复替换值 导致每次加载值有问题
 		tmpMsgFromCron := msgFromCron
 		//添加发送微信任务
-		task.AddTask(tmpMsgFromCron)
+		err := AddTask(tmpMsgFromCron)
+		if err != nil {
+			return
+		}
 	}
 	//fmt.Println(c.Entries())
 }
 
 // 重新初始化任务
-func (task *Task) ResetTask() error {
+func ResetTask() error {
 
 	//删除原来所有的任务
-	for _, entry := range task.CronTask.Entries() {
-		task.CronTask.RemoveJob(entry.Name)
+	for _, entry := range global.Tasks.CronTask.Entries() {
+		global.Tasks.CronTask.RemoveJob(entry.Name)
 	}
 
 	//初始化
-	task.InitCron()
+	InitCron()
 	return nil
 }
 
 // 添加task任务
-func (task *Task) AddTask(MsgFromCron model.MsgFromCron) error {
-	if MsgFromCron.IsSend == SendTureInCron {
-		task.CronTask.AddFunc(MsgFromCron.CronTime, func() {
-			//添加发送任务
-			utils.SendTimeNotice(MsgFromCron)
-		}, cast.ToString(MsgFromCron.Id)+"-cron")
-		task.CronCount += 1
-	}
-
+func AddTask(msgFromCron model.MsgFromCron) error {
+	global.Tasks.CronTask.AddFunc(msgFromCron.CronTime, func() {
+		if msgFromCron.Type == 3 {
+			err := encapsulationTask(msgFromCron)
+			if err == nil {
+				// 删除数据库
+				global.DB.Delete(&msgFromCron)
+				// 删除定时任务
+				global.Tasks.CronTask.RemoveJob(msgFromCron.Name)
+				return
+			}
+		}
+		//添加发送任务
+		utils.SendTimeNotice(msgFromCron)
+	}, msgFromCron.Name)
+	global.Tasks.CronCount += 1
 	return nil
+}
 
+func encapsulationTask(cron model.MsgFromCron) error {
+	var pointPosition model.PointPosition
+	pointPosition.PointPositionId = cron.PointPositionId
+	_ = global.DB.Find(&pointPosition)
+	if *pointPosition.Status%10 != 0 {
+		return nil
+	}
+	var tmp model.MsgFromCron
+	tmp.Id = uuid.NewV4().String()
+	tmp.Receive = cron.Receive
+	tmp.WxName = cron.WxName
+	tmp.ScheduledTime = cron.ScheduledTime
+	tmp.Name = strings.Replace(cron.Name, "-3", "-2-", -1) + global.AssignmentNotStartedTag
+	tmp.Type = 2
+	tmp.CronTime = "0/30 * * * * *"
+	tmp.PointPositionId = cron.PointPositionId
+	global.DB.Create(tmp)
+	err := AddTask(tmp)
+	return err
 }
 
 ////测试发送一次 不触发重置定时任务 A表的单个
 //func (task Task) SentOneCronTask(msgFromA connectToDatabase.MsgFromA) error {
 //	if msgFromA.IsSend == SendTureInA {
 //	}
-//	err := notice.SendMsg(task.Base, msgFromA)
+//	err := notice.SendMsg(init.Tasks.Base, msgFromA)
 //	if err != nil {
 //		return err
 //	}
@@ -86,7 +106,7 @@ func (task *Task) AddTask(MsgFromCron model.MsgFromCron) error {
 //
 ////测试全部的任务
 //func (task Task) SendAllCronTask() error {
-//	msgFromAs, err := connectToDatabase.QueryMsgFromA(task.Base)
+//	msgFromAs, err := connectToDatabase.QueryMsgFromA(init.Tasks.Base)
 //	if err != nil {
 //		return err
 //	}
@@ -95,14 +115,14 @@ func (task *Task) AddTask(MsgFromCron model.MsgFromCron) error {
 //		//添加变量 来解决循环 拷贝问题  就是会重复替换值 导致每次加载值有问题
 //		tmpMsgFromA := msgFromA
 //		//添加任务
-//		task.SentOneCronTask(tmpMsgFromA)
+//		init.Tasks.SentOneCronTask(tmpMsgFromA)
 //	}
 //	return nil
 //}
 //
 ////重置所有任务
 //func (task Task) ResetAllRestTask() error {
-//	msgFromAs, err := connectToDatabase.QueryMsgFromA(task.Base)
+//	msgFromAs, err := connectToDatabase.QueryMsgFromA(init.Tasks.Base)
 //	if err != nil {
 //		return err
 //	}
@@ -111,7 +131,7 @@ func (task *Task) AddTask(MsgFromCron model.MsgFromCron) error {
 //		//添加变量 来解决循环 拷贝问题  就是会重复替换值 导致每次加载值有问题
 //		tmpMsgFromA := msgFromA
 //		//添加任务
-//		task.ResetOneResetTask(tmpMsgFromA)
+//		init.Tasks.ResetOneResetTask(tmpMsgFromA)
 //	}
 //	return nil
 //}
@@ -124,7 +144,7 @@ func (task *Task) AddTask(MsgFromCron model.MsgFromCron) error {
 //		if msgFromA.ResetTime != ResetTrueInA {
 //
 //			//重置方法
-//			err := notice.ResetCompleteStatus(task.Base, msgFromA)
+//			err := notice.ResetCompleteStatus(init.Tasks.Base, msgFromA)
 //			if err != nil {
 //				return err
 //			}

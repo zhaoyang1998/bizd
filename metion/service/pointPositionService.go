@@ -1,8 +1,9 @@
 package service
 
 import (
-	"bizd/metion/db"
+	"bizd/metion/global"
 	"bizd/metion/model"
+	"bizd/metion/timedTask"
 	"bizd/metion/utils"
 	"encoding/json"
 	"fmt"
@@ -12,14 +13,12 @@ import (
 	"gorm.io/gorm"
 	"log"
 	"net/http"
+	"time"
 )
 
 func AddPointPosition(c *gin.Context) {
 	var pointPosition model.PointPosition
-
-	er := c.ShouldBindJSON(&pointPosition)
-	fmt.Println(er)
-	fmt.Printf("%+v", pointPosition)
+	_ = c.ShouldBindJSON(&pointPosition)
 	// 参数验证
 	validate := validator.New()
 	err := validate.Struct(pointPosition)
@@ -29,8 +28,9 @@ func AddPointPosition(c *gin.Context) {
 		return
 	}
 	pointPosition.PointPositionId = uuid.NewV4().String()
-	pointPosition.Status = pointPosition.Type * 10
-	result := db.DB.Create(pointPosition)
+	var tmp = *pointPosition.Type * 10
+	pointPosition.Status = &tmp
+	result := global.DB.Create(pointPosition)
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -46,9 +46,11 @@ func AddPointPosition(c *gin.Context) {
 
 func GetPointPosition(c *gin.Context) {
 	var pointPosition model.PointPosition
-	_ = c.Bind(&pointPosition)
+	_ = c.ShouldBindJSON(&pointPosition)
+	pointPosition.PageSize = 10
+	pointPosition.PageNumber = 1
 	var pointPositions []model.PointPosition
-	result := db.DB.Joins("left join t_user on t_user.user_id = t_point_position.implementer_id").
+	result := global.DB.Joins("left join t_user on t_user.user_id = t_point_position.implementer_id").
 		Joins("left join t_user t1 on t1.user_id = t_point_position.user_id").
 		Joins("left join t_client client on client.client_id = t_point_position.client_id").
 		Select("t_point_position.*, t_user.user_name as implementer_name, t1.user_name as user_name, client.client_abbreviation as client_abbreviation").Offset((pointPosition.PageNumber - 1) * pointPosition.PageSize).Limit(pointPosition.PageSize).Where(pointPosition).Find(&pointPositions)
@@ -70,14 +72,14 @@ func GetPointPosition(c *gin.Context) {
 func DelPointPosition(c *gin.Context) {
 	var response model.Response
 	var pointPosition model.PointPosition
-	_ = c.Bind(&pointPosition)
+	_ = c.ShouldBindJSON(&pointPosition)
 	if pointPosition.PointPositionId == "" {
 		response.Code = http.StatusCreated
 		response.Message = "单位ID不能为空"
 		c.JSON(http.StatusOK, response)
 		return
 	}
-	result := db.DB.Delete(&pointPosition)
+	result := global.DB.Delete(&pointPosition)
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -93,8 +95,13 @@ func DelPointPosition(c *gin.Context) {
 func UpdatePointPosition(c *gin.Context) {
 	var response model.Response
 	var pointPosition model.PointPosition
-	_ = c.Bind(&pointPosition)
-	result := db.DB.Model(&pointPosition).Updates(&pointPosition)
+	_ = c.ShouldBindJSON(&pointPosition)
+	if pointPosition.Type != nil {
+		fmt.Println(*pointPosition.Type * 10)
+		var tmp = *pointPosition.Type * 10
+		pointPosition.Status = &tmp
+	}
+	result := global.DB.Model(&pointPosition).Updates(&pointPosition).Update("status", pointPosition.Status)
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -110,17 +117,31 @@ func UpdatePointPosition(c *gin.Context) {
 func StartAssignment(c *gin.Context) {
 	var response model.Response
 	var pointPosition model.PointPosition
-	pointPosition.PointPositionId = c.Query("pointPositionId")
+	var msgFormCron []model.MsgFromCron
+	err := c.Bind(&pointPosition)
+	if err != nil || pointPosition.PointPositionId == "" {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    400,
+			"message": "参数请求错误",
+		})
+		return
+	}
+	result := global.DB.Where("point_position_id = ?", pointPosition.PointPositionId).Find(&msgFormCron)
+	for _, val := range msgFormCron {
+		global.Tasks.CronTask.RemoveJob(val.Name)
+	}
+	result = global.DB.Where("point_position_id = ?", pointPosition.PointPositionId).Delete(model.MsgFromCron{})
 	if pointPosition.PointPositionId == "" {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "参数不能为空",
 		})
 	}
-	result := db.DB.Model(&pointPosition).Where(gorm.Expr("status % 10 = 0")).Updates(map[string]interface{}{"status": gorm.Expr("status + 1"),
-		"start_time": utils.GetNowTime(), "current_workload": gorm.Expr("current_workload + 1")})
+	result = global.DB.Model(&pointPosition).Where(gorm.Expr("status % 10 = 0")).Updates(map[string]interface{}{"status": gorm.Expr("status + 1"),
+		"start_time": utils.GetNowTime()})
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    500,
 			"message": result.Error,
 		})
 		return
@@ -139,8 +160,8 @@ func FinishAssignment(c *gin.Context) {
 			"message": "参数不能为空",
 		})
 	}
-	result := db.DB.Model(&pointPosition).Where(gorm.Expr("status % 10 = 1")).Updates(map[string]interface{}{"status": gorm.Expr("status + 1"), "end_time": utils.GetNowTime(),
-		"current_workload": gorm.Expr("current_workload - 1")})
+	result := global.DB.Model(&pointPosition).Where(gorm.Expr("status % 10 = 1")).Updates(map[string]interface{}{"status": gorm.Expr("status + 1"), "end_time": utils.GetNowTime()})
+	result = global.DB.Model(model.User{UserId: pointPosition.ImplementerId}).Update("current_workload", gorm.Expr("current_workload + 1"))
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -156,8 +177,45 @@ func FinishAssignment(c *gin.Context) {
 func AllocatingAssignment(c *gin.Context) {
 	var response model.Response
 	var pointPosition model.PointPosition
+	var user model.User
+	var tmp []model.MsgFromCron
 	_ = c.Bind(&pointPosition)
-	result := db.DB.Model(&pointPosition).Updates(&pointPosition)
+	// 判断当前任务是否已分配
+	result := global.DB.Where("point_position_id = ?", pointPosition.PointPositionId).Find(&tmp)
+	if result.RowsAffected != 0 {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    200,
+			"message": "当前实施地点已分配",
+		})
+		return
+	}
+	result = global.DB.Model(&pointPosition).Updates(&pointPosition)
+	result = global.DB.Model(model.User{UserId: pointPosition.ImplementerId}).Update("current_workload", gorm.Expr("current_workload + 1"))
+	user.UserId = pointPosition.ImplementerId
+	result = global.DB.Find(&user)
+	var msgFormCorns, err = encapsulationTasks(pointPosition, user)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    400,
+			"message": "参数请求错误",
+		})
+		return
+	}
+	global.DB.Create(msgFormCorns)
+	for _, val := range msgFormCorns {
+		err := timedTask.AddTask(val)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"code":    http.StatusInternalServerError,
+				"message": "添加定时任务失败",
+			})
+			return
+		}
+	}
+	for _, val := range global.Tasks.CronTask.Entries() {
+		fmt.Printf("%+v", val)
+		fmt.Println()
+	}
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -169,4 +227,38 @@ func AllocatingAssignment(c *gin.Context) {
 	response.Code = http.StatusOK
 	response.Message = "请求成功"
 	c.JSON(http.StatusOK, response)
+}
+
+func encapsulationTasks(position model.PointPosition, user model.User) ([3]model.MsgFromCron, error) {
+	var msgFormCorns [3]model.MsgFromCron
+	msgFormCorns[0].Id = uuid.NewV4().String()
+	msgFormCorns[1].Id = uuid.NewV4().String()
+	msgFormCorns[2].Id = uuid.NewV4().String()
+	msgFormCorns[0].Receive = global.WxUrl
+	msgFormCorns[1].Receive = global.WxUrl
+	msgFormCorns[2].Receive = global.WxUrl
+	msgFormCorns[0].Name = position.PointPositionName + "-0-" + global.AllocatingAssignmentTag
+	msgFormCorns[1].Name = position.PointPositionName + "-1-" + global.AssignmentStartTag
+	msgFormCorns[2].Name = position.PointPositionName + "-3"
+	msgFormCorns[0].Type = 0
+	msgFormCorns[1].Type = 1
+	msgFormCorns[2].Type = 3
+	msgFormCorns[0].PointPositionId = position.PointPositionId
+	msgFormCorns[1].PointPositionId = position.PointPositionId
+	msgFormCorns[2].PointPositionId = position.PointPositionId
+	msgFormCorns[0].WxName = user.WxName
+	msgFormCorns[1].WxName = user.WxName
+	msgFormCorns[2].WxName = user.WxName
+	msgFormCorns[0].ScheduledTime = position.ScheduledTime
+	msgFormCorns[1].ScheduledTime = position.ScheduledTime
+	msgFormCorns[2].ScheduledTime = position.ScheduledTime
+	var scheduledTime, err = time.Parse(global.TimeFormat, position.ScheduledTime)
+	if err != nil {
+		return msgFormCorns, err
+	}
+	fmt.Println(scheduledTime)
+	msgFormCorns[0].CronTime = utils.DateConversionCron(time.Now().Add(time.Second * 60 * 1))
+	msgFormCorns[1].CronTime = utils.DateConversionCron(scheduledTime.Add(time.Minute * 2 * -1))
+	msgFormCorns[2].CronTime = utils.DateConversionCron(scheduledTime)
+	return msgFormCorns, err
 }

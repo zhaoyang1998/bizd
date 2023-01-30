@@ -3,20 +3,17 @@ package timedTask
 import (
 	"bizd/metion/model"
 	"errors"
-	"fmt"
 	"gorm.io/gorm"
 )
 
-//QueryMsgFromCron 从Cron表中获取数据
+// QueryMsgFromCron 从Cron表中获取数据
 func QueryMsgFromCron(base *gorm.DB) ([]model.MsgFromCron, error) {
 	var res []model.MsgFromCron
 
-	query := base.Find(&res)
+	query := base.Where("is_send", "0").Find(&res)
 	if query.Error != nil {
 		return nil, errors.New("读取数据库Cron信息错误")
 	}
-
-	fmt.Printf("cron:%#v\n", res)
 	return res, nil
 }
 

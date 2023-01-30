@@ -1,8 +1,17 @@
 package utils
 
-import "time"
+import (
+	"bizd/metion/global"
+	"strconv"
+	"time"
+)
 
 func GetNowTime() string {
-	timeString := time.Now().Format("2006-01-02 15:04:05")
+	timeString := time.Now().Format(global.TimeFormat)
 	return timeString
+}
+
+func DateConversionCron(tmpTime time.Time) string {
+	var cronTime = strconv.Itoa(tmpTime.Second()) + " " + strconv.Itoa(tmpTime.Minute()) + " " + strconv.Itoa(tmpTime.Hour()) + " " + strconv.Itoa(tmpTime.Day()) + " " + strconv.Itoa(int(tmpTime.Month())) + " *"
+	return cronTime
 }

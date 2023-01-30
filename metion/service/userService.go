@@ -1,7 +1,7 @@
 package service
 
 import (
-	"bizd/metion/db"
+	"bizd/metion/global"
 	"bizd/metion/model"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
@@ -21,7 +21,7 @@ func GetUserByType(c *gin.Context) {
 		return
 	}
 	var users []model.User
-	result := db.DB.Select("user_id,user_name").Where("type = ?", userType).Find(&users)
+	result := global.DB.Select("user_id,user_name").Where("type = ?", userType).Find(&users)
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -39,7 +39,7 @@ func GetUserByType(c *gin.Context) {
 func GetUsers(c *gin.Context) {
 	var response model.Response
 	var users []model.User
-	result := db.DB.Select("user_id,user_name,wx_name,type,current_workload").Find(&users)
+	result := global.DB.Select("user_id,user_name,wx_name,type,current_workload").Find(&users)
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -56,7 +56,7 @@ func GetUsers(c *gin.Context) {
 
 func AddUser(c *gin.Context) {
 	var user model.User
-	_ = c.Bind(&user)
+	_ = c.ShouldBindJSON(&user)
 	// 参数验证
 	validate := validator.New()
 	err := validate.Struct(user)
@@ -66,7 +66,7 @@ func AddUser(c *gin.Context) {
 		return
 	}
 	user.UserId = uuid.NewV4().String()
-	result := db.DB.Create(user)
+	result := global.DB.Create(user)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": result.Error,
@@ -82,14 +82,14 @@ func AddUser(c *gin.Context) {
 func DelUser(c *gin.Context) {
 	var response model.Response
 	var user model.User
-	_ = c.Bind(&user)
+	_ = c.ShouldBindJSON(&user)
 	if user.UserId == "" {
 		response.Code = http.StatusCreated
 		response.Message = "用户ID不能为空"
 		c.JSON(http.StatusOK, response)
 		return
 	}
-	result := db.DB.Delete(&user)
+	result := global.DB.Delete(&user)
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -105,8 +105,8 @@ func DelUser(c *gin.Context) {
 func UpdateUser(c *gin.Context) {
 	var response model.Response
 	var user model.User
-	_ = c.Bind(&user)
-	result := db.DB.Model(&user).Updates(&user)
+	_ = c.ShouldBindJSON(&user)
+	result := global.DB.Model(&user).Updates(&user)
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
