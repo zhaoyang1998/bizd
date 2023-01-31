@@ -83,7 +83,12 @@ func login(c *gin.Context) {
 }
 
 func menuInfo(c *gin.Context) {
-	c.JSON(http.StatusOK, `{"code":0,"data":{"id":2,"username":"demo1","nickname":"demo1","avatar":"http://admin.gumingchen.icu/file/d6cddc7f-9d67-4366-bc8e-ecad19e1bf76.webp","mobile":"13777777777","email":"1240235512@qq.com","sex":1,"status":1,"supervisor":0,"roles":[{"id":1,"name":"Demo","permission":5,"custom":""}],"token":"28263720307e1a0fcfbdbd021b26f062","department_id":2,"enterprise_id":1,"created_at":"2022-07-15 14:18:02","updated_at":"2022-11-29 13:29:33","department_name":"前端开发部门","department_permission":4,"department_custom":"1"},"message":"成功！","status":"success"}`)
+	c.JSON(http.StatusOK, gin.H{
+		"code":    0,
+		"message": "成功！",
+		"status":  "success",
+		"data":    `{"id":2,"username":"demo1","nickname":"demo1","avatar":"http://admin.gumingchen.icu/file/d6cddc7f-9d67-4366-bc8e-ecad19e1bf76.webp","mobile":"13777777777","email":"1240235512@qq.com","sex":1,"status":1,"supervisor":0,"roles":[{"id":1,"name":"Demo","permission":5,"custom":""}],"token":"28263720307e1a0fcfbdbd021b26f062","department_id":2,"enterprise_id":1,"created_at":"2022-07-15 14:18:02","updated_at":"2022-11-29 13:29:33","department_name":"前端开发部门","department_permission":4,"department_custom":"1"}`,
+	})
 }
 
 func getUsers(context *gin.Context) {

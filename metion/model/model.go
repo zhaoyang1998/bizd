@@ -100,10 +100,17 @@ type Response struct {
 	Data string `json:"data"`
 	// 提示消息
 	Message string `json:"message"`
+	ResponsePagination
 }
 type Pagination struct {
 	PageSize   int `json:"pageSize" form:"pageSize,default=10" gorm:"-"`
 	PageNumber int `json:"pageNumber" form:"pageNumber,default=1" gorm:"-"`
+}
+type ResponsePagination struct {
+	Total int `json:"total" form:"total"`
+	Cur   int `json:"cur" form:"cur"`
+	Next  int `json:"next" form:"next"`
+	Prev  int `json:"prev" form:"prev"`
 }
 
 // MsgFromCron 来获取Cron库的数据
