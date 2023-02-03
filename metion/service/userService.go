@@ -1,6 +1,8 @@
 package service
 
 import (
+	"bizd/metion"
+	"bizd/metion/dao"
 	"bizd/metion/global"
 	"bizd/metion/model"
 	"encoding/json"
@@ -37,13 +39,17 @@ func GetUserByType(c *gin.Context) {
 }
 
 func GetUsers(c *gin.Context) {
+	var user model.User
 	var response model.Response
 	var users []model.User
-	result := global.DB.Select("user_id,user_name,wx_name,type,current_workload").Find(&users)
-	if result.Error != nil {
-		log.Print(result.Error)
+	var err error
+	var pagination model.ResponsePagination
+	_ = c.ShouldBindJSON(&user)
+	pagination, users, err = dao.GetUsersDao(user)
+	if err != nil {
+		log.Print(err)
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": result.Error,
+			"message": err,
 		})
 		return
 	}
@@ -51,6 +57,30 @@ func GetUsers(c *gin.Context) {
 	response.Data = string(data)
 	response.Code = http.StatusOK
 	response.Message = "请求成功"
+	response.ResponsePagination = pagination
+	c.JSON(http.StatusOK, response)
+}
+
+func GetUsersByKeyword(c *gin.Context) {
+	var search model.Search
+	var response model.Response
+	var users []model.User
+	var err error
+	var pagination model.ResponsePagination
+	_ = c.ShouldBindJSON(search)
+	pagination, users, err = dao.GetUsersByKeywordDao(search)
+	if err != nil {
+		log.Print(err)
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err,
+		})
+		return
+	}
+	data, _ := json.Marshal(users)
+	response.Data = string(data)
+	response.Code = http.StatusOK
+	response.Message = "请求成功"
+	response.ResponsePagination = pagination
 	c.JSON(http.StatusOK, response)
 }
 
@@ -117,4 +147,25 @@ func UpdateUser(c *gin.Context) {
 	response.Code = http.StatusOK
 	response.Message = "请求成功"
 	c.JSON(http.StatusOK, response)
+}
+
+func Login(c *gin.Context) {
+	var user model.User
+	var err error
+	_ = c.ShouldBindJSON(&user)
+	user, err = dao.GetUserDao(user.UserAccount, user.UserPwd)
+	msg := metion.ResponseMsg{
+		Code:    200,
+		Message: "成功！",
+		Status:  "success",
+	}
+	if err != nil {
+		msg.Message = "账号或密码错误"
+		msg.Status = "fail"
+	} else {
+		token, _ := metion.CreateToken(user.UserId)
+		msg.Data.Token = token
+		msg.Message = "成功"
+	}
+	c.JSON(http.StatusOK, msg)
 }

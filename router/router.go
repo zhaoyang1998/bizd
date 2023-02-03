@@ -3,10 +3,7 @@ package router
 import (
 	"bizd/metion"
 	"bizd/metion/service"
-	"fmt"
 	"github.com/gin-gonic/gin"
-	jsoniter "github.com/json-iterator/go"
-	"io/ioutil"
 	"log"
 	"net/http"
 )
@@ -46,6 +43,25 @@ func Cors() gin.HandlerFunc {
 	}
 }
 
+func Authorize() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		token := c.Request.Header.Get("token") // 访问令牌
+		if metion.CheckToken(token) && token != "" {
+			// 验证通过，会继续访问下一个中间件
+			c.Next()
+		} else {
+			// 验证不通过，不再调用后续的函数处理
+			c.Abort()
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"code":    201,
+				"message": "账号未登录或已过期",
+			})
+			// return可省略, 只要前面执行Abort()就可以让后面的handler函数不再执行
+			return
+		}
+	}
+}
+
 // 设置路由方法
 func test(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
@@ -55,31 +71,7 @@ func test(c *gin.Context) {
 
 // login获取token
 func login(c *gin.Context) {
-	data, _ := ioutil.ReadAll(c.Request.Body)
-	fmt.Println(string(data))
-	username := jsoniter.Get(data, "username")
-	//passWord := jsoniter.Get(data, "passWord")
-
-	token, err := metion.CreateToken(1, username)
-	fmt.Println(err)
-	msg := metion.ResponseMsg{
-		Code: 0,
-		Data: struct {
-			Token           string `json:"token"`
-			AdministratorID int    `json:"administrator_id"`
-			ExpiredAt       string `json:"expired_at"`
-			CreatedAt       string `json:"created_at"`
-		}{
-			token,
-			2,
-			"2022-12-05 19:10:33",
-			"2022-12-05 17:10:33"},
-		Message: "成功！",
-		Status:  "success",
-	}
-
-	c.JSON(http.StatusOK, msg)
-
+	service.Login(c)
 }
 
 func menuInfo(c *gin.Context) {
@@ -93,6 +85,10 @@ func menuInfo(c *gin.Context) {
 
 func getUsers(context *gin.Context) {
 	service.GetUsers(context)
+}
+
+func getUsersByKeyword(context *gin.Context) {
+	service.GetUsersByKeyword(context)
 }
 
 func getUsersByType(context *gin.Context) {
@@ -118,6 +114,10 @@ func getClients(c *gin.Context) {
 	service.GetClients(c)
 }
 
+func getClientsByKeyword(context *gin.Context) {
+	service.GetClientsByKeyword(context)
+}
+
 func delClient(context *gin.Context) {
 	service.DelClient(context)
 }
@@ -136,6 +136,10 @@ func updatePointPosition(context *gin.Context) {
 
 func getPointPosition(context *gin.Context) {
 	service.GetPointPosition(context)
+}
+
+func GetPointPositionByKeyword(context *gin.Context) {
+	service.GetPointPositionByKeyword(context)
 }
 
 func addPointPosition(context *gin.Context) {
@@ -170,25 +174,41 @@ func SetupRouter() *gin.Engine {
 	r.GET("/admin/administrator/self/info", menuInfo)
 
 	// 用户相关接口
-	r.POST("/user/getUsers", getUsers)
-	r.POST("/user/getUsersByType", getUsersByType)
-	r.POST("/user/addUser", addUser)
-	r.POST("/user/updateUser", updateUser)
-	r.POST("/user/delUser", delUser)
+	userApi := r.Group("/user")
+	{
+		userApi.Use(Authorize())
+		userApi.POST("/getUsers", getUsers)
+		userApi.POST("/getUsersByKeyword", getUsersByKeyword)
+		userApi.POST("/getUsersByType", getUsersByType)
+		userApi.POST("/addUser", addUser)
+		userApi.POST("/updateUser", updateUser)
+		userApi.POST("/delUser", delUser)
+	}
 
 	// 客户相关接口
-	r.POST("/client/addClient", addClient)
-	r.POST("/client/getClients", getClients)
-	r.POST("/client/updateClient", updateClient)
-	r.POST("/client/delClient", delClient)
+	clientApi := r.Group("/client")
+	{
+		userApi.Use(Authorize())
+		clientApi.POST("/addClient", addClient)
+		clientApi.POST("/getClients", getClients)
+		clientApi.POST("/getClientsByKeyword", getClientsByKeyword)
+		clientApi.POST("/updateClient", updateClient)
+		clientApi.POST("/delClient", delClient)
+	}
 
 	// 单位相关接口
-	r.POST("/pointPosition/addPointPosition", addPointPosition)
-	r.POST("/pointPosition/getPointPosition", getPointPosition)
-	r.POST("/pointPosition/updatePointPosition", updatePointPosition)
-	r.POST("/pointPosition/delPointPosition", delPointPosition)
-	r.POST("/pointPosition/startAssignment", startAssignment)
-	r.POST("/pointPosition/finishAssignment", finishAssignment)
-	r.POST("/pointPosition/allocatingAssignment", allocatingAssignment)
+	pointPositionApi := r.Group("/pointPosition")
+	{
+		userApi.Use(Authorize())
+		pointPositionApi.POST("/addPointPosition", addPointPosition)
+		pointPositionApi.POST("/getPointPosition", getPointPosition)
+		pointPositionApi.POST("/GetPointPositionByKeyword", GetPointPositionByKeyword)
+		pointPositionApi.POST("/updatePointPosition", updatePointPosition)
+		pointPositionApi.POST("/delPointPosition", delPointPosition)
+		pointPositionApi.POST("/startAssignment", startAssignment)
+		pointPositionApi.POST("/finishAssignment", finishAssignment)
+		pointPositionApi.POST("/allocatingAssignment", allocatingAssignment)
+	}
+
 	return r
 }

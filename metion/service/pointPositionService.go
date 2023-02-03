@@ -51,7 +51,30 @@ func GetPointPosition(c *gin.Context) {
 	var pointPositions []model.PointPosition
 	var pagination model.ResponsePagination
 	var err error
-	pagination, pointPositions, err = dao.GetPointPosition(pointPosition)
+	pagination, pointPositions, err = dao.GetPointPositionDao(pointPosition)
+	if err != nil {
+		log.Print(err)
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err,
+		})
+		return
+	}
+	var response model.Response
+	data, _ := json.Marshal(pointPositions)
+	response.Data = string(data)
+	response.Code = http.StatusOK
+	response.Message = "请求成功"
+	response.ResponsePagination = pagination
+	c.JSON(http.StatusOK, response)
+}
+
+func GetPointPositionByKeyword(c *gin.Context) {
+	var search model.Search
+	_ = c.ShouldBindJSON(&search)
+	var pointPositions []model.PointPosition
+	var pagination model.ResponsePagination
+	var err error
+	pagination, pointPositions, err = dao.GetPointPositionByKeywordDao(search)
 	if err != nil {
 		log.Print(err)
 		c.JSON(http.StatusInternalServerError, gin.H{

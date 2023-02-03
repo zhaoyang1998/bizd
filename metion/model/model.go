@@ -77,6 +77,8 @@ type PointPosition struct {
 type User struct {
 	// 用户id
 	UserId string `gorm:"primaryKey" json:"userId" form:"userId"`
+	// 账号
+	UserAccount string `json:"userAccount" form:"userAccount" validate:"required"`
 	// 用户名
 	UserName string `json:"userName" form:"userName" validate:"required"`
 	// 密码
@@ -100,11 +102,12 @@ type Response struct {
 	Data string `json:"data"`
 	// 提示消息
 	Message string `json:"message"`
+	Token   string `json:"token"`
 	ResponsePagination
 }
 type Pagination struct {
-	PageSize   int `json:"pageSize" form:"pageSize,default=10" gorm:"-"`
-	PageNumber int `json:"pageNumber" form:"pageNumber,default=1" gorm:"-"`
+	PageSize   int `json:"pageSize" form:"pageSize" gorm:"-"`
+	PageNumber int `json:"pageNumber" form:"pageNumber" gorm:"-"`
 }
 type ResponsePagination struct {
 	Total int `json:"total" form:"total"`
@@ -130,6 +133,11 @@ type MsgFromCron struct {
 type Task struct {
 	CronTask  *cron.Cron
 	CronCount int
+}
+
+type Search struct {
+	Keyword string `json:"keyword"`
+	Pagination
 }
 
 // TableName 对应数据库中的表名

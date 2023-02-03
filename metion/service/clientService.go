@@ -1,6 +1,7 @@
 package service
 
 import (
+	"bizd/metion/dao"
 	"bizd/metion/global"
 	"bizd/metion/model"
 	"encoding/json"
@@ -42,11 +43,13 @@ func GetClients(c *gin.Context) {
 	var client model.Client
 	_ = c.ShouldBindJSON(&client)
 	var clients []model.Client
-	result := global.DB.Select("client_id,client_name,client_abbreviation,data_link,principal_id,status").Where(client).Find(&clients)
-	if result.Error != nil {
-		log.Print(result.Error)
+	var err error
+	var pagination model.ResponsePagination
+	pagination, clients, err = dao.GetClientsDao(client)
+	if err != nil {
+		log.Print(err)
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": result.Error,
+			"message": err,
 		})
 		return
 	}
@@ -55,6 +58,30 @@ func GetClients(c *gin.Context) {
 	response.Data = string(data)
 	response.Code = http.StatusOK
 	response.Message = "请求成功"
+	response.ResponsePagination = pagination
+	c.JSON(http.StatusOK, response)
+}
+
+func GetClientsByKeyword(c *gin.Context) {
+	var search model.Search
+	_ = c.ShouldBindJSON(&search)
+	var clients []model.Client
+	var err error
+	var pagination model.ResponsePagination
+	pagination, clients, err = dao.GetClientsByKeywordDao(search)
+	if err != nil {
+		log.Print(err)
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err,
+		})
+		return
+	}
+	var response model.Response
+	data, _ := json.Marshal(clients)
+	response.Data = string(data)
+	response.Code = http.StatusOK
+	response.Message = "请求成功"
+	response.ResponsePagination = pagination
 	c.JSON(http.StatusOK, response)
 }
 

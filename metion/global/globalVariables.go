@@ -7,6 +7,16 @@ import (
 
 var DB *gorm.DB
 var Tasks *model.Task
+var MySigningKey = []byte("Key of BIZD")
+var ExpiresTime int64 = 60 * 60 * 24
+var Issuer = "BIZD" // token签发人
+// 数据库信息
+
+var User = "root"
+var Pwd = "baishan123"
+var Ip = "172.18.89.86"
+var Port = "3306"
+var DbName = "bizd"
 
 const (
 	TimeFormat              = "2006-01-02 15:04:05"

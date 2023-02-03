@@ -6,10 +6,10 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-playground/validator/v10 v10.10.0
+	github.com/golang-jwt/jwt/v4 v4.4.3
 	github.com/jakecoffman/cron v0.0.0-20190106200828-7e2009c226a5
 	github.com/json-iterator/go v1.1.12
 	github.com/satori/go.uuid v1.2.0
-	github.com/spf13/cast v1.5.0
 	github.com/xuri/excelize/v2 v2.7.0
 	gorm.io/driver/mysql v1.4.4
 	gorm.io/gorm v1.24.2

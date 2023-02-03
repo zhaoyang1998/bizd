@@ -12,7 +12,7 @@ import (
 )
 
 func GormDB() (err error) {
-	dsn := "root:baishan123@tcp(172.18.89.86:3306)/bizd?charset=utf8mb3&parseTime=True&loc=Local"
+	dsn := global.User + ":" + global.Pwd + "@tcp(" + global.Ip + ":" + global.Port + ")/" + global.DbName + "?charset=utf8mb3&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true, // 使用单数表名
