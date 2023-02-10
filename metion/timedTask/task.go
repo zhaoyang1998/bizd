@@ -11,6 +11,7 @@ import (
 )
 
 // 初始化数据库的定时任务
+
 func InitCron() {
 
 	//初始定时任务 初始化时 将任务总数记为0
@@ -40,19 +41,21 @@ func InitCron() {
 }
 
 // 重新初始化任务
-func ResetTask() error {
 
-	//删除原来所有的任务
-	for _, entry := range global.Tasks.CronTask.Entries() {
-		global.Tasks.CronTask.RemoveJob(entry.Name)
-	}
-
-	//初始化
-	InitCron()
-	return nil
-}
+//func ResetTask() error {
+//
+//	//删除原来所有的任务
+//	for _, entry := range global.Tasks.CronTask.Entries() {
+//		global.Tasks.CronTask.RemoveJob(entry.Name)
+//	}
+//
+//	//初始化
+//	InitCron()
+//	return nil
+//}
 
 // 添加task任务
+
 func AddTask(msgFromCron model.MsgFromCron) error {
 	global.Tasks.CronTask.AddFunc(msgFromCron.CronTime, func() {
 		if msgFromCron.Type == 3 {

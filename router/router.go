@@ -150,12 +150,24 @@ func finishAssignment(context *gin.Context) {
 	service.FinishAssignment(context)
 }
 
+func loginOut(context *gin.Context) {
+	context.JSON(200, gin.H{
+		"code":    0,
+		"message": "成功！",
+		"status":  "success",
+	})
+}
+
 func startAssignment(context *gin.Context) {
 	service.StartAssignment(context)
 }
 
 func allocatingAssignment(context *gin.Context) {
 	service.AllocatingAssignment(context)
+}
+
+func getHomePageData(context *gin.Context) {
+	service.GetHomePageData(context)
 }
 
 // SetupRouter 配置路由信息
@@ -169,6 +181,7 @@ func SetupRouter() *gin.Engine {
 
 	// 登录获取token
 	r.POST("/admin/login", login)
+	r.POST("/admin/logout", loginOut)
 
 	// 获取路由信息
 	r.GET("/admin/administrator/self/info", menuInfo)
@@ -188,7 +201,7 @@ func SetupRouter() *gin.Engine {
 	// 客户相关接口
 	clientApi := r.Group("/client")
 	{
-		userApi.Use(Authorize())
+		clientApi.Use(Authorize())
 		clientApi.POST("/addClient", addClient)
 		clientApi.POST("/getClients", getClients)
 		clientApi.POST("/getClientsByKeyword", getClientsByKeyword)
@@ -199,7 +212,7 @@ func SetupRouter() *gin.Engine {
 	// 单位相关接口
 	pointPositionApi := r.Group("/pointPosition")
 	{
-		userApi.Use(Authorize())
+		pointPositionApi.Use(Authorize())
 		pointPositionApi.POST("/addPointPosition", addPointPosition)
 		pointPositionApi.POST("/getPointPosition", getPointPosition)
 		pointPositionApi.POST("/GetPointPositionByKeyword", GetPointPositionByKeyword)
@@ -208,6 +221,13 @@ func SetupRouter() *gin.Engine {
 		pointPositionApi.POST("/startAssignment", startAssignment)
 		pointPositionApi.POST("/finishAssignment", finishAssignment)
 		pointPositionApi.POST("/allocatingAssignment", allocatingAssignment)
+	}
+	// 单位相关接口
+
+	commonApi := r.Group("/common")
+	{
+		//commonApi.Use(Authorize())
+		commonApi.GET("/:clientId", getHomePageData)
 	}
 
 	return r

@@ -1,6 +1,8 @@
 package model
 
-import "github.com/jakecoffman/cron"
+import (
+	"github.com/jakecoffman/cron"
+)
 
 type Conductor struct {
 	Id          int `gorm:"primaryKey"`
@@ -105,10 +107,12 @@ type Response struct {
 	Token   string `json:"token"`
 	ResponsePagination
 }
+
 type Pagination struct {
 	PageSize   int `json:"pageSize" form:"pageSize" gorm:"-"`
 	PageNumber int `json:"pageNumber" form:"pageNumber" gorm:"-"`
 }
+
 type ResponsePagination struct {
 	Total int `json:"total" form:"total"`
 	Cur   int `json:"cur" form:"cur"`
@@ -138,6 +142,11 @@ type Task struct {
 type Search struct {
 	Keyword string `json:"keyword"`
 	Pagination
+}
+
+type EchartsPie struct {
+	Name  string `json:"name"`
+	Value int    `json:"value"`
 }
 
 // TableName 对应数据库中的表名

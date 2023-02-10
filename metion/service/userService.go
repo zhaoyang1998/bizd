@@ -160,6 +160,7 @@ func Login(c *gin.Context) {
 		Status:  "success",
 	}
 	if err != nil {
+		msg.Code = 600
 		msg.Message = "账号或密码错误"
 		msg.Status = "fail"
 	} else {
