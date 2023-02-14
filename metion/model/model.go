@@ -26,9 +26,11 @@ type Client struct {
 	// 客户资料连接
 	DataLink string `json:"dataLink" form:"dataLink"`
 	// 负责人ID
-	PrincipalId string `json:"principalId" form:"principalId" validate:"required"`
+	PrincipalId   string `json:"principalId" form:"principalId"`
+	PrincipalName string `json:"principalName" form:"principalName" gorm:"->"`
 	// 客户状态： 实施未开始、进行中、已完成:10,11,12 POC未开始、进行中、已完成:20,21,22
-	Status int `json:"status" form:"status" validate:"required"`
+	Status     int    `json:"status" form:"status" validate:"required"`
+	StatusName string `json:"statusName" gorm:"-"`
 	// 分页参数
 	Pagination
 }
@@ -41,7 +43,7 @@ type PointPosition struct {
 	// 所属客户ID
 	ClientId string `json:"clientId" form:"clientId" validate:"required"`
 	// 客户名称
-	ClientAbbreviation string `json:"clientAbbreviation" form:"clientAbbreviation" gorm:"-"`
+	ClientAbbreviation string `json:"clientAbbreviation" form:"clientAbbreviation" gorm:"->"`
 	// 创建者id
 	UserId string `json:"userId" form:"userId"`
 	// 创建者名称
@@ -143,7 +145,9 @@ type Search struct {
 	Keyword string `json:"keyword"`
 	Pagination
 }
-
+type DelModel struct {
+	Keys []string `json:"keys"`
+}
 type EchartsPie struct {
 	Name  string `json:"name"`
 	Value int    `json:"value"`

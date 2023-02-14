@@ -25,3 +25,23 @@ const (
 	AssignmentStartTag      = "开始提醒"
 	AssignmentNotStartedTag = "超时未开始提醒"
 )
+
+type ClientStatus int
+
+const (
+	Unimplemented = iota + 10
+	InImplemented
+	EndOfImplementation
+	UnPoc = iota + 17
+	InPoc
+	EndPoc
+)
+
+var ClientStatusText = map[ClientStatus]string{
+	Unimplemented:       "实施未开始",
+	InImplemented:       "实施中",
+	EndOfImplementation: "实施结束",
+	UnPoc:               "POC未开始",
+	InPoc:               "POC进行中",
+	EndPoc:              "POC结束",
+}
