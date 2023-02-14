@@ -31,3 +31,18 @@ func TranClientStatus(clients []model.Client) {
 		}
 	}
 }
+
+func TranUserType(users []model.User) {
+	for i, user := range users {
+		switch user.Type {
+		case global.Delivery:
+			users[i].TypeName = global.UserTypeText[global.Delivery]
+			break
+		case global.PM:
+			users[i].TypeName = global.UserTypeText[global.PM]
+			break
+		default:
+			users[i].TypeName = "-"
+		}
+	}
+}

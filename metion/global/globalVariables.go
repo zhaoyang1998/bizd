@@ -45,3 +45,15 @@ var ClientStatusText = map[ClientStatus]string{
 	InPoc:               "POC进行中",
 	EndPoc:              "POC结束",
 }
+
+type UserType int
+
+const (
+	Delivery = iota + 1
+	PM
+)
+
+var UserTypeText = map[UserType]string{
+	Delivery: "交付",
+	PM:       "项目经理",
+}

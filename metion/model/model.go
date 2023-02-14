@@ -89,8 +89,9 @@ type User struct {
 	UserPwd string `json:"userPwd" form:"userPwd" validate:"required"`
 	// 微信名称
 	WxName string `json:"wxName" form:"wxName" validate:"required"`
-	// 人员类型 0：交付 1：项目管理
-	Type int `json:"type" form:"type" validate:"required"`
+	// 人员类型 1：交付 2：项目管理
+	Type     int    `json:"type" form:"type" validate:"required"`
+	TypeName string `json:"typeName" gorm:"-"`
 	// 优先级
 	Priority int `json:"priority" form:"priority"`
 	// 当前工作量

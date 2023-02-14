@@ -48,9 +48,7 @@ func GetUsers(c *gin.Context) {
 	pagination, users, err = dao.GetUsersDao(user)
 	if err != nil {
 		log.Print(err)
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": err,
-		})
+		c.JSON(200, gin.H{"code": 400, "message": err.Error()})
 		return
 	}
 	data, _ := json.Marshal(users)
@@ -67,13 +65,11 @@ func GetUsersByKeyword(c *gin.Context) {
 	var users []model.User
 	var err error
 	var pagination model.ResponsePagination
-	_ = c.ShouldBindJSON(search)
+	_ = c.ShouldBindJSON(&search)
 	pagination, users, err = dao.GetUsersByKeywordDao(search)
 	if err != nil {
 		log.Print(err)
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": err,
-		})
+		c.JSON(200, gin.H{"code": 400, "message": err.Error()})
 		return
 	}
 	data, _ := json.Marshal(users)
@@ -92,13 +88,14 @@ func AddUser(c *gin.Context) {
 	err := validate.Struct(user)
 	if err != nil {
 		log.Print(err.Error())
-		c.JSON(200, gin.H{"code": 201, "msg": err.Error()})
+		c.JSON(200, gin.H{"code": 400, "message": err.Error()})
 		return
 	}
 	user.UserId = uuid.NewV4().String()
 	result := global.DB.Create(user)
 	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
+		c.JSON(200, gin.H{
+			"code":    400,
 			"message": result.Error,
 		})
 		return
@@ -111,20 +108,19 @@ func AddUser(c *gin.Context) {
 
 func DelUser(c *gin.Context) {
 	var response model.Response
-	var user model.User
-	_ = c.ShouldBindJSON(&user)
-	if user.UserId == "" {
+	var del = model.DelModel{}
+	var err error
+	_ = c.ShouldBindJSON(&del)
+	if len(del.Keys) == 0 {
 		response.Code = http.StatusCreated
-		response.Message = "用户ID不能为空"
+		response.Message = "客户ID不能为空"
 		c.JSON(http.StatusOK, response)
 		return
 	}
-	result := global.DB.Delete(&user)
-	if result.Error != nil {
-		log.Print(result.Error)
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": result.Error,
-		})
+	err = dao.DelUserByKeys(del)
+	if err != nil {
+		log.Print(err)
+		c.JSON(200, gin.H{"code": 400, "message": err.Error()})
 		return
 	}
 	response.Code = http.StatusOK
@@ -139,9 +135,7 @@ func UpdateUser(c *gin.Context) {
 	result := global.DB.Model(&user).Updates(&user)
 	if result.Error != nil {
 		log.Print(result.Error)
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": result.Error,
-		})
+		c.JSON(200, gin.H{"code": 400, "message": result.Error})
 		return
 	}
 	response.Code = http.StatusOK

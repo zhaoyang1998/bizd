@@ -30,9 +30,7 @@ func AddClient(c *gin.Context) {
 	result := global.DB.Create(client)
 	if result.Error != nil {
 		log.Print(result.Error)
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": result.Error,
-		})
+		c.JSON(200, gin.H{"code": 400, "message": err.Error()})
 		return
 	}
 	var response model.Response
@@ -50,9 +48,7 @@ func GetClients(c *gin.Context) {
 	pagination, clients, err = dao.GetClientsDao(client)
 	if err != nil {
 		log.Print(err)
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": err,
-		})
+		c.JSON(200, gin.H{"code": 400, "message": err.Error()})
 		return
 	}
 	var response model.Response
@@ -73,9 +69,7 @@ func GetClientsByKeyword(c *gin.Context) {
 	pagination, clients, err = dao.GetClientsByKeywordDao(search)
 	if err != nil {
 		log.Print(err)
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": err,
-		})
+		c.JSON(200, gin.H{"code": 400, "message": err.Error()})
 		return
 	}
 	var response model.Response
@@ -101,9 +95,7 @@ func DelClient(c *gin.Context) {
 	err = dao.DelClientByKeys(del)
 	if err != nil {
 		log.Print(err)
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": err,
-		})
+		c.JSON(200, gin.H{"code": 400, "message": err.Error()})
 		return
 	}
 	response.Code = http.StatusOK
@@ -118,9 +110,7 @@ func UpdateClient(c *gin.Context) {
 	result := global.DB.Model(&client).Updates(&client)
 	if result.Error != nil {
 		log.Print(result.Error)
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": result.Error,
-		})
+		c.JSON(200, gin.H{"code": 400, "message": result.Error})
 		return
 	}
 	response.Code = http.StatusOK
