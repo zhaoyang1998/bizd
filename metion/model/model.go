@@ -47,7 +47,7 @@ type PointPosition struct {
 	// 创建者id
 	UserId string `json:"userId" form:"userId"`
 	// 创建者名称
-	UserName string `json:"userName" form:"userName" gorm:"-"`
+	UserName string `json:"userName" form:"userName" gorm:"->"`
 	// 单位地址
 	Address string `json:"address" form:"address" validate:"required"`
 	// ip规划
@@ -55,17 +55,18 @@ type PointPosition struct {
 	// 实施类型 0：调研 1：正式实施 2：POC
 	Type *int `json:"type" form:"type" validate:"required"`
 	// 人数
-	PeopleNumbers *int `json:"peopleNumbers" form:"peopleNumbers" validate:"required"`
+	PeopleNumbers *int `json:"peopleNumbers" form:"peopleNumbers"`
 	// 预计实施时间
 	ScheduledTime string `json:"scheduledTime" form:"scheduledTime"`
 	// 人员
 	ImplementerId string `json:"implementerId" form:"implementerId"`
 	// 人员名称
-	ImplementerName string `json:"implementerName" form:"implementerName" gorm:"-"`
+	ImplementerName string `json:"implementerName" form:"implementerName" gorm:"->"`
 	// CpeName
 	CpeName string `json:"cpeName" form:"cpeName"`
 	// 状态，调研未开始、进行中、已完成:0,1,2 实施未开始、进行中、已完成:10,11,12 POC未开始、进行中、已完成:20,21,22
-	Status *int `gorm:"FORCE" json:"status" form:"status"`
+	Status     *int   `gorm:"FORCE" json:"status" form:"status"`
+	StatusName string `gorm:"-" json:"statusName" form:"statusName"`
 	// 实施资链接
 	DataLink string `json:"dataLink" form:"dataLink"`
 	// 备注
@@ -100,29 +101,6 @@ type User struct {
 	Pagination
 }
 
-type Response struct {
-	// 状态码
-	Code int `json:"code"`
-	// 数据
-	Data string `json:"data"`
-	// 提示消息
-	Message string `json:"message"`
-	Token   string `json:"token"`
-	ResponsePagination
-}
-
-type Pagination struct {
-	PageSize   int `json:"pageSize" form:"pageSize" gorm:"-"`
-	PageNumber int `json:"pageNumber" form:"pageNumber" gorm:"-"`
-}
-
-type ResponsePagination struct {
-	Total int `json:"total" form:"total"`
-	Cur   int `json:"cur" form:"cur"`
-	Next  int `json:"next" form:"next"`
-	Prev  int `json:"prev" form:"prev"`
-}
-
 // MsgFromCron 来获取Cron库的数据
 type MsgFromCron struct {
 	Id          string `json:"id"`
@@ -137,21 +115,10 @@ type MsgFromCron struct {
 	PointPositionId string `json:"pointPositionId"`
 	ScheduledTime   string `json:"scheduledTime" gorm:"-"`
 }
+
 type Task struct {
 	CronTask  *cron.Cron
 	CronCount int
-}
-
-type Search struct {
-	Keyword string `json:"keyword"`
-	Pagination
-}
-type DelModel struct {
-	Keys []string `json:"keys"`
-}
-type EchartsPie struct {
-	Name  string `json:"name"`
-	Value int    `json:"value"`
 }
 
 // TableName 对应数据库中的表名

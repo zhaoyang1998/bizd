@@ -60,6 +60,23 @@ func GetClients(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+func GetAllClients(c *gin.Context) {
+	var clients []model.Client
+	var err error
+	clients, err = dao.GetAllClientsDao()
+	if err != nil {
+		log.Print(err)
+		c.JSON(200, gin.H{"code": 400, "message": err.Error()})
+		return
+	}
+	var response model.Response
+	data, _ := json.Marshal(clients)
+	response.Data = string(data)
+	response.Code = http.StatusOK
+	response.Message = "请求成功"
+	c.JSON(http.StatusOK, response)
+}
+
 func GetClientsByKeyword(c *gin.Context) {
 	var search model.Search
 	_ = c.ShouldBindJSON(&search)

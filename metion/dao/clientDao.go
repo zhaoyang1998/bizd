@@ -26,6 +26,16 @@ func GetClientsDao(client model.Client) (model.ResponsePagination, []model.Clien
 	return pagination, clients, nil
 }
 
+func GetAllClientsDao() ([]model.Client, error) {
+	var clients []model.Client
+	result := global.DB.Select("client_id,client_abbreviation").Find(&clients)
+	if result.Error != nil {
+		log.Print(result.Error)
+		return nil, result.Error
+	}
+	return clients, nil
+}
+
 func GetClientsByKeywordDao(search model.Search) (model.ResponsePagination, []model.Client, error) {
 	if search.PageSize == 0 {
 		search.PageSize = 10

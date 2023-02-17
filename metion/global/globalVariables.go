@@ -26,10 +26,13 @@ const (
 	AssignmentNotStartedTag = "超时未开始提醒"
 )
 
-type ClientStatus int
+type ClientAndPointPositionStatus int
 
 const (
-	Unimplemented = iota + 10
+	UnResearched = iota
+	InResearched
+	EndOfResearched
+	UnImplemented = iota + 7
 	InImplemented
 	EndOfImplementation
 	UnPoc = iota + 17
@@ -37,8 +40,11 @@ const (
 	EndPoc
 )
 
-var ClientStatusText = map[ClientStatus]string{
-	Unimplemented:       "实施未开始",
+var ClientAndPointPositionStatusText = map[ClientAndPointPositionStatus]string{
+	UnResearched:        "未调研",
+	InResearched:        "调研中",
+	EndOfResearched:     "调研结束",
+	UnImplemented:       "实施未开始",
 	InImplemented:       "实施中",
 	EndOfImplementation: "实施结束",
 	UnPoc:               "POC未开始",

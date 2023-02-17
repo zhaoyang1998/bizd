@@ -114,6 +114,10 @@ func getClients(c *gin.Context) {
 	service.GetClients(c)
 }
 
+func getAllClients(context *gin.Context) {
+	service.GetAllClients(context)
+}
+
 func getClientsByKeyword(context *gin.Context) {
 	service.GetClientsByKeyword(context)
 }
@@ -165,9 +169,16 @@ func startAssignment(context *gin.Context) {
 func allocatingAssignment(context *gin.Context) {
 	service.AllocatingAssignment(context)
 }
+func cancelAssignment(context *gin.Context) {
+	service.CancelAssignment(context)
+}
 
 func getHomePageData(context *gin.Context) {
 	service.GetHomePageData(context)
+}
+
+func getMenuJson(context *gin.Context) {
+	service.GetMenuJson(context)
 }
 
 // SetupRouter 配置路由信息
@@ -204,6 +215,7 @@ func SetupRouter() *gin.Engine {
 		clientApi.Use(Authorize())
 		clientApi.POST("/addClient", addClient)
 		clientApi.POST("/getClients", getClients)
+		clientApi.GET("/getAllClients", getAllClients)
 		clientApi.POST("/getClientsByKeyword", getClientsByKeyword)
 		clientApi.POST("/updateClient", updateClient)
 		clientApi.POST("/delClient", delClient)
@@ -219,15 +231,17 @@ func SetupRouter() *gin.Engine {
 		pointPositionApi.POST("/updatePointPosition", updatePointPosition)
 		pointPositionApi.POST("/delPointPosition", delPointPosition)
 		pointPositionApi.POST("/startAssignment", startAssignment)
-		pointPositionApi.POST("/finishAssignment", finishAssignment)
+		pointPositionApi.GET("/finishAssignment/:pointPositionId", finishAssignment)
 		pointPositionApi.POST("/allocatingAssignment", allocatingAssignment)
+		pointPositionApi.POST("/cancelAssignment", cancelAssignment)
 	}
 	// 单位相关接口
 
 	commonApi := r.Group("/common")
 	{
 		//commonApi.Use(Authorize())
-		commonApi.GET("/:clientId", getHomePageData)
+		commonApi.GET("/getHomePageData/:clientId", getHomePageData)
+		commonApi.GET("/getMenuJson", getMenuJson)
 	}
 
 	return r
