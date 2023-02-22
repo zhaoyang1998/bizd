@@ -72,18 +72,19 @@ func DelPointPositionByKeys(del model.DelModel) error {
 }
 func FinishAssignmentDao(pointPosition model.PointPosition) error {
 	tx := global.DB.Begin()
-	result := tx.Model(&pointPosition).Where(gorm.Expr("status % 10 = 1")).Updates(map[string]interface{}{"status": gorm.Expr("status + 1"), "end_time": utils.GetNowTime()})
+	var tmp int64
+	result := tx.Model(model.PointPosition{}).
+		Where("status % 10 != 2 and client_id = (?)", tx.Model(&pointPosition).Select("client_id")).Count(&tmp)
 	if result.Error != nil {
 		tx.Rollback()
 		return result.Error
 	}
-	result = tx.Exec("SELECT count(*) FROM `t_point_position` WHERE t_point_position.status % 10 != 2 and t_point_position.client_id = (SELECT `client_id` FROM `t_point_position` WHERE `t_point_position`.`point_position_id` = ?)",
-		pointPosition.PointPositionId)
+	result = tx.Model(&pointPosition).Where(gorm.Expr("status % 10 = 1")).Updates(map[string]interface{}{"status": gorm.Expr("status + 1"), "end_time": utils.GetNowTime(), "total_time": gorm.Expr("total_time + ?", time.Now().Unix())})
 	if result.Error != nil {
 		tx.Rollback()
 		return result.Error
 	}
-	result = tx.Exec("UPDATE t_client client LEFT JOIN t_point_position pp ON client.client_id = pp.client_id SET client.status = client.status + 1 WHERE pp.point_position_id = ? and (client.status % 10 = 0 or "+strconv.Itoa(*(*int)(unsafe.Pointer(&result.RowsAffected)))+"=1)",
+	result = tx.Exec("UPDATE t_client client LEFT JOIN t_point_position pp ON client.client_id = pp.client_id SET client.status = client.status + 1 WHERE pp.point_position_id = ? and (client.status % 10 = 0 or "+strconv.Itoa(*(*int)(unsafe.Pointer(&tmp)))+"=1)",
 		pointPosition.PointPositionId)
 	if result.Error != nil {
 		tx.Rollback()
@@ -160,7 +161,7 @@ func StartAssignmentDao(pointPosition model.PointPosition) error {
 		return result.Error
 	}
 	result = tx.Model(&pointPosition).Where(gorm.Expr("status % 10 = 0")).Updates(map[string]interface{}{"status": gorm.Expr("status + 1"),
-		"start_time": utils.GetNowTime()})
+		"start_time": utils.GetNowTime(), "total_time": time.Now().Unix() * -1})
 	if result.Error != nil {
 		tx.Rollback()
 		return result.Error
@@ -190,8 +191,8 @@ func CancelAssignmentDao(pointPosition model.PointPosition) error {
 		tx.Rollback()
 		return result.Error
 	}
-	result = tx.Model(&pointPosition).Updates(map[string]interface{}{"status": gorm.Expr("(status / 10) * 10"),
-		"start_time": nil, "implementer_id": nil, "scheduled_time": nil})
+	result = tx.Model(&pointPosition).Updates(map[string]interface{}{"status": gorm.Expr("floor(status / 10) * 10"),
+		"start_time": nil, "implementer_id": nil, "scheduled_time": nil, "total_time": 0})
 	if result.Error != nil {
 		tx.Rollback()
 		return result.Error

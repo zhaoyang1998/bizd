@@ -8,6 +8,7 @@ import (
 	"github.com/jakecoffman/cron"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 )
 
@@ -17,6 +18,7 @@ func GormDB() (err error) {
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true, // 使用单数表名
 		},
+		Logger: logger.Default.LogMode(logger.Info),
 	})
 	if err != nil {
 		fmt.Printf("数据库连接失败：%v\n", err)

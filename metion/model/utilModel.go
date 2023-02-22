@@ -12,15 +12,15 @@ type Response struct {
 }
 
 type Pagination struct {
-	PageSize   int `json:"pageSize" form:"pageSize" gorm:"-"`
-	PageNumber int `json:"pageNumber" form:"pageNumber" gorm:"-"`
+	PageSize   int `json:"pageSize,omitempty" form:"pageSize" gorm:"-"`
+	PageNumber int `json:"pageNumber,omitempty" form:"pageNumber" gorm:"-"`
 }
 
 type ResponsePagination struct {
-	Total int `json:"total" form:"total"`
-	Cur   int `json:"cur" form:"cur"`
-	Next  int `json:"next" form:"next"`
-	Prev  int `json:"prev" form:"prev"`
+	Total int `json:"total,omitempty" form:"total"`
+	Cur   int `json:"cur,omitempty" form:"cur"`
+	Next  int `json:"next,omitempty" form:"next"`
+	Prev  int `json:"prev,omitempty" form:"prev"`
 }
 
 type Search struct {
@@ -32,18 +32,81 @@ type DelModel struct {
 }
 
 type Echarts struct {
-	TotalData []EchartsPie `json:"totalData"`
-	CurData   []EchartsPie `json:"curData"`
+	TotalData      EchartsPie  `json:"totalData"`
+	CurData        EchartsPie  `json:"curData"`
+	EfficiencyData EchartsLine `json:"efficiencyData,omitempty"`
+	NullEcharts    NullEcharts `json:"nullEcharts,omitempty"`
 }
-type EchartsPie struct {
+type EchartsPieData struct {
 	Value int    `json:"value"`
 	Name  string `json:"name"`
 }
-
-type MenuJson struct {
-	Permissions []string `json:"permissions"`
-	Menus       []Menu   `json:"menus"`
+type EchartsPie struct {
+	Series  []EchartsPieSeries `json:"series,omitempty"`
+	Legend  EchartsLegend      `json:"legend,omitempty"`
+	Title   EchartsTitle       `json:"title,omitempty"`
+	ToolTip EchartsToolTip     `json:"tooltip,omitempty"`
 }
+type EchartsPieSeries struct {
+	Type  string           `json:"type,omitempty"`
+	Data  []EchartsPieData `json:"data,omitempty"`
+	Label EchartsLabel     `json:"label"`
+}
+type EchartsLabel struct {
+	Show      bool   `json:"show,omitempty"`
+	Formatter string `json:"formatter,omitempty"`
+}
+type EchartsLegend struct {
+	Data   []string `json:"data,omitempty"`
+	Left   string   `json:"left,omitempty"`
+	Orient string   `json:"orient,omitempty"`
+}
+type EchartsLine struct {
+	Legend  EchartsLegend       `json:"legend,omitempty"`
+	XAxis   Axis                `json:"xAxis,omitempty"`
+	YAxis   Axis                `json:"yAxis,omitempty"`
+	Tooltip EchartsToolTip      `json:"tooltip,omitempty"`
+	Series  []EchartsLineSeries `json:"series,omitempty"`
+	Title   EchartsTitle        `json:"title,omitempty"`
+	Flag    bool                `json:"flag"`
+}
+type EchartsToolTip struct {
+	Trigger string `json:"trigger,omitempty"` // axis   item   none三个值
+}
+type NullEcharts struct {
+	Title EchartsTitle `json:"title,omitempty"`
+}
+type EchartsTitle struct {
+	Text string `json:"text,omitempty"`
+	Left string `json:"left,omitempty"`
+	X    string `json:"x,omitempty"`
+	Y    string `json:"y,omitempty"`
+}
+type EchartsLineSeries struct {
+	Name string `json:"name,omitempty"`
+	Data []int  `json:"data,omitempty"`
+	Type string `json:"type,omitempty"`
+}
+type Axis struct {
+	Type          string        `json:"type,omitempty"`
+	Data          []string      `json:"data,omitempty"`
+	Name          string        `json:"name,omitempty"`
+	NameTextStyle NameTextStyle `json:"nameTextStyle,omitempty"`
+}
+type NameTextStyle struct {
+	FontWeight int `json:"fontWeight,omitempty"`
+	FontSize   int `json:"fontSize,omitempty"`
+}
+
+type Result struct {
+	Times float32
+	Weeks int
+}
+type MenuJson struct {
+	Permissions []string `json:"permissions,omitempty"`
+	Menus       []Menu   `json:"menus,omitempty"`
+}
+
 type Menu struct {
 	Id           int    `json:"permissions"`
 	Path         string `json:"path"`

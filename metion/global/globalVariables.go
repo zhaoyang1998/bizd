@@ -20,6 +20,7 @@ var DbName = "bizd"
 
 const (
 	TimeFormat              = "2006-01-02 15:04:05"
+	TimeDayFormat           = "2006-01-02"
 	WxUrl                   = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3d9df143-f9fa-4353-9685-002f11f82d52"
 	AllocatingAssignmentTag = "分配提醒"
 	AssignmentStartTag      = "开始提醒"

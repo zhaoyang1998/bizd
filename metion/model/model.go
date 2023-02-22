@@ -74,7 +74,8 @@ type PointPosition struct {
 	// 开始时间
 	StartTime string `json:"startTime" form:"startTime"`
 	// 结束时间
-	EndTime string `json:"endTime" form:"endTime"`
+	EndTime   string `json:"endTime" form:"endTime"`
+	TotalTime int    `json:"totalTime" form:"totalTime"`
 	// 分页参数
 	Pagination
 }

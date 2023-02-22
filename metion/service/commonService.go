@@ -3,6 +3,7 @@ package service
 import (
 	"bizd/metion/dao"
 	"bizd/metion/model"
+	"bizd/metion/utils"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
@@ -32,6 +33,20 @@ func GetHomePageData(c *gin.Context) {
 		return
 	}
 	echarts.CurData = curData
+	efficiencyData, err := dao.GetEfficiencyDataDao(clientId)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    400,
+			"message": "参数请求错误",
+		})
+		return
+	}
+	if efficiencyData.Series == nil {
+		echarts.NullEcharts = utils.GetNullLine()
+		echarts.EfficiencyData.Flag = true
+	} else {
+		echarts.EfficiencyData = efficiencyData
+	}
 	msg.Code = 200
 	msg.Message = "请求成功"
 	tmp, _ := json.Marshal(echarts)
