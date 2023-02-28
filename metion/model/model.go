@@ -31,6 +31,7 @@ type Client struct {
 	// 客户状态： 实施未开始、进行中、已完成:10,11,12 POC未开始、进行中、已完成:20,21,22
 	Status     int    `json:"status" form:"status" validate:"required"`
 	StatusName string `json:"statusName" gorm:"-"`
+	UpdatedAt  int    `json:"updatedAt,-"`
 	// 分页参数
 	Pagination
 }
@@ -76,6 +77,7 @@ type PointPosition struct {
 	// 结束时间
 	EndTime   string `json:"endTime" form:"endTime"`
 	TotalTime int    `json:"totalTime" form:"totalTime"`
+	UpdatedAt int    `json:"updatedAt,-"`
 	// 分页参数
 	Pagination
 }
@@ -98,8 +100,22 @@ type User struct {
 	Priority int `json:"priority" form:"priority"`
 	// 当前工作量
 	CurrentWorkload int `json:"currentWorkload" form:"currentWorkload"`
+	UpdatedAt       int `json:"updatedAt,-"`
 	// 分页参数
 	Pagination
+}
+
+type ImplementDetails struct {
+	ImplementDetailId string `json:"implementDetailId" gorm:"primaryKey"`
+	PointPositionId   string `json:"pointPositionId,omitempty"`
+	StepName          string `json:"stepName,omitempty"`
+	Desc              string `json:"desc,omitempty"`
+	Seq               int    `json:"seq,omitempty"`
+	UpdatedAt         int    `json:"updatedAt,-"`
+	Total             int64  `json:"total,omitempty"  gorm:"->"`
+	TotalTime         int64  `json:"totalTime,omitempty"  `
+	StartTime         string `json:"startTime,omitempty"`
+	EndTime           string `json:"endTime,omitempty"`
 }
 
 // MsgFromCron 来获取Cron库的数据
@@ -122,6 +138,11 @@ type Task struct {
 	CronCount int
 }
 
+type SystemParameters struct {
+	Key   string
+	Value string
+}
+
 // TableName 对应数据库中的表名
 
 func (Conductor) TableName() string {
@@ -140,6 +161,14 @@ func (User) TableName() string {
 	return "t_user"
 }
 
+func (ImplementDetails) TableName() string {
+	return "t_implement_details"
+}
+
 func (MsgFromCron) TableName() string {
 	return "t_cron"
+}
+
+func (SystemParameters) TableName() string {
+	return "t_system_parameters"
 }

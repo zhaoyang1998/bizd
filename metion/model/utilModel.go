@@ -126,3 +126,9 @@ type Menu struct {
 	EnterpriseId int    `json:"enterprise_id"`
 	Children     []Menu `json:"children"`
 }
+
+type MyError struct {
+	Code    int
+	Message string
+	Error   error
+}

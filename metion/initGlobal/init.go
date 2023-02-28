@@ -32,9 +32,16 @@ func GormDB() (err error) {
 func Inits() {
 	_ = GormDB()
 	initCron()
+	initSystemParameters()
 	return
 }
-
+func initSystemParameters() {
+	var params []model.SystemParameters
+	_ = global.DB.Find(&params)
+	for _, item := range params {
+		global.SystemParameters[item.Key] = item.Value
+	}
+}
 func initCron() {
 	global.Tasks = &model.Task{}
 	global.Tasks.CronTask = cron.New()

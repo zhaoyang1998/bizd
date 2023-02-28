@@ -21,10 +21,11 @@ var DbName = "bizd"
 const (
 	TimeFormat              = "2006-01-02 15:04:05"
 	TimeDayFormat           = "2006-01-02"
-	WxUrl                   = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3d9df143-f9fa-4353-9685-002f11f82d52"
+	WxUrlDefault            = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3d9df143-f9fa-4353-9685-002f11f82d52"
 	AllocatingAssignmentTag = "分配提醒"
 	AssignmentStartTag      = "开始提醒"
 	AssignmentNotStartedTag = "超时未开始提醒"
+	WxUrlKey                = "WxUrl"
 )
 
 type ClientAndPointPositionStatus int
@@ -58,9 +59,13 @@ type UserType int
 const (
 	Delivery = iota + 1
 	PM
+	ADMIN
 )
 
 var UserTypeText = map[UserType]string{
 	Delivery: "交付",
 	PM:       "项目经理",
+	ADMIN:    "系统管理员",
 }
+
+var SystemParameters = map[string]string{}

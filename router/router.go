@@ -244,5 +244,38 @@ func SetupRouter() *gin.Engine {
 		commonApi.GET("/getMenuJson", getMenuJson)
 	}
 
+	detailApi := r.Group("/details")
+	{
+		detailApi.POST("/getPPDetail", getPPDetail)
+		detailApi.POST("/getNextPPDetail", getNextPPDetail)
+		detailApi.POST("/getPrevPPDetail", getPrevPPDetail)
+		detailApi.POST("/updatePPDetail", updatePPDetail)
+		detailApi.GET("/delPPDetail/:id", delPPDetail)
+		detailApi.GET("/getAllDetail/:id", getAllDetail)
+	}
 	return r
+}
+
+func getAllDetail(context *gin.Context) {
+	service.GetAllDetail(context)
+}
+
+func getPrevPPDetail(context *gin.Context) {
+	service.GetPrevPPDetail(context)
+}
+
+func updatePPDetail(context *gin.Context) {
+	service.UpdatePPDetail(context)
+}
+
+func delPPDetail(context *gin.Context) {
+	service.DelPPDetail(context)
+}
+
+func getNextPPDetail(context *gin.Context) {
+	service.GetNextPPDetail(context)
+}
+
+func getPPDetail(context *gin.Context) {
+	service.GetPPDetail(context)
 }

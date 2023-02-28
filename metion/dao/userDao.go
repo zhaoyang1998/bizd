@@ -14,7 +14,7 @@ func GetUsersDao(user model.User) (model.ResponsePagination, []model.User, error
 	var users []model.User
 	var pagination model.ResponsePagination
 	var totalTmp int64
-	result := global.DB.Select("user_id,user_name,wx_name,type,current_workload,user_account").Where(user).Offset((user.PageNumber - 1) * user.PageSize).Limit(user.PageSize).Find(&users)
+	result := global.DB.Select("user_id,user_name,wx_name,type,current_workload,user_account").Where(user).Offset((user.PageNumber - 1) * user.PageSize).Limit(user.PageSize).Order("updated_at desc").Find(&users)
 	if result.Error != nil {
 		log.Print(result.Error)
 		return pagination, nil, result.Error
@@ -32,7 +32,7 @@ func GetUsersByKeywordDao(search model.Search) (model.ResponsePagination, []mode
 	var users []model.User
 	var pagination model.ResponsePagination
 	var totalTmp int64
-	result := global.DB.Select("user_id,user_name,wx_name,type,current_workload,user_account").Where("user_name LIKE ? or wx_name LIKE ?", "%"+search.Keyword+"%", "%"+search.Keyword+"%").Offset((search.PageNumber - 1) * search.PageSize).Limit(search.PageSize).Find(&users)
+	result := global.DB.Select("user_id,user_name,wx_name,type,current_workload,user_account").Where("user_name LIKE ? or wx_name LIKE ?", "%"+search.Keyword+"%", "%"+search.Keyword+"%").Offset((search.PageNumber - 1) * search.PageSize).Limit(search.PageSize).Order("updated_at desc").Find(&users)
 	if result.Error != nil {
 		log.Print(result.Error)
 		return pagination, nil, result.Error

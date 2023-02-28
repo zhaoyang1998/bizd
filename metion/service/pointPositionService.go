@@ -29,7 +29,7 @@ func AddPointPosition(c *gin.Context) {
 	pointPosition.UserId = utils.GetCurrentUserId(c)
 	var tmp = *pointPosition.Type * 10
 	pointPosition.Status = &tmp
-	result := global.DB.Create(pointPosition)
+	result := global.DB.Create(&pointPosition)
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(200, gin.H{"code": 400, "message": err.Error()})

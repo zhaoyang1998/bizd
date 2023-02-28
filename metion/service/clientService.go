@@ -27,7 +27,7 @@ func AddClient(c *gin.Context) {
 	}
 	client.ClientId = uuid.NewV4().String()
 	client.PrincipalId = utils.GetCurrentUserId(c)
-	result := global.DB.Create(client)
+	result := global.DB.Create(&client)
 	if result.Error != nil {
 		log.Print(result.Error)
 		c.JSON(200, gin.H{"code": 400, "message": err.Error()})

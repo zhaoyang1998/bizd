@@ -58,3 +58,9 @@ func GetPrevWeeksStartAndEnd(num int) string {
 	t := tmp.AddDate(0, 0, -7*num)
 	return t.Format(global.TimeDayFormat) + "~" + t.AddDate(0, 0, 6).Format(global.TimeDayFormat)
 }
+
+func TimeFormatToUnix(timeFormat string) int64 {
+	local, _ := time.LoadLocation("Local")
+	locationDatetime, _ := time.ParseInLocation(global.TimeFormat, timeFormat, local)
+	return locationDatetime.Unix()
+}

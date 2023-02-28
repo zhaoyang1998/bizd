@@ -92,7 +92,7 @@ func AddUser(c *gin.Context) {
 		return
 	}
 	user.UserId = uuid.NewV4().String()
-	result := global.DB.Create(user)
+	result := global.DB.Create(&user)
 	if result.Error != nil {
 		c.JSON(200, gin.H{
 			"code":    400,
