@@ -99,7 +99,6 @@ func CreateDetail(details model.ImplementDetails, tx *gorm.DB) model.ImplementDe
 
 func UpdateCurDetail(details model.ImplementDetails, tx *gorm.DB) {
 	details.TotalTime = utils.TimeFormatToUnix(details.EndTime) - utils.TimeFormatToUnix(details.StartTime)
-	details.ImplementDetailId = "1"
 	result := tx.Model(&details).Updates(&details)
 	if result.Error != nil {
 		tx.Rollback()
