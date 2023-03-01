@@ -7,7 +7,6 @@ import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
-	"log"
 	"net/http"
 )
 
@@ -55,9 +54,8 @@ func GetHomePageData(c *gin.Context) {
 }
 func GetMenuJson(c *gin.Context) {
 	var response model.Response
-	dataByte, err := ioutil.ReadFile("./metion/static/menu.json")
+	dataByte, err := ioutil.ReadFile("./static/menu.json")
 	if err != nil {
-		log.Print("读取menu.json文件失败")
 		c.JSON(200, gin.H{"code": 500, "message": "文件读取失败"})
 	}
 	var menus model.MenuJson
