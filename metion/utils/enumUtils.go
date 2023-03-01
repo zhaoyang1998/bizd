@@ -41,6 +41,9 @@ func TranUserType(users []model.User) {
 		case global.PM:
 			users[i].TypeName = global.UserTypeText[global.PM]
 			break
+		case global.ADMIN:
+			users[i].TypeName = global.UserTypeText[global.ADMIN]
+			break
 		default:
 			users[i].TypeName = "-"
 		}
