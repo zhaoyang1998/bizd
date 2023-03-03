@@ -6,7 +6,6 @@ import (
 	"bizd/metion/model"
 	"bizd/metion/utils"
 	"encoding/json"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	uuid "github.com/satori/go.uuid"
@@ -111,8 +110,7 @@ func UpdatePointPosition(c *gin.Context) {
 	var response model.Response
 	var pointPosition model.PointPosition
 	_ = c.ShouldBindJSON(&pointPosition)
-	if pointPosition.Type != nil {
-		fmt.Println(*pointPosition.Type * 10)
+	if pointPosition.Type != nil && *pointPosition.Status%10 == 0 {
 		var tmp = *pointPosition.Type * 10
 		pointPosition.Status = &tmp
 	}

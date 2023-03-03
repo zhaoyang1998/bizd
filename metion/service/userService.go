@@ -5,6 +5,7 @@ import (
 	"bizd/metion/dao"
 	"bizd/metion/global"
 	"bizd/metion/model"
+	"bizd/metion/utils"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -162,5 +163,20 @@ func Login(c *gin.Context) {
 		msg.Data.Token = token
 		msg.Message = "成功"
 	}
+	c.JSON(http.StatusOK, msg)
+}
+func GetAllUsers(c *gin.Context) {
+	var msg model.Response
+	utils.Try(func() {
+		users := dao.GetAllUsers()
+		msg.Code = 200
+		msg.Message = "请求成功"
+		tmp, _ := json.Marshal(users)
+		msg.Data = string(tmp)
+	}, func(err interface{}) {
+		res, _ := err.(model.MyError)
+		msg.Message = res.Message
+		msg.Code = res.Code
+	})
 	c.JSON(http.StatusOK, msg)
 }

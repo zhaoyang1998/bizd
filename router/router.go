@@ -94,7 +94,9 @@ func getUsersByKeyword(context *gin.Context) {
 func getUsersByType(context *gin.Context) {
 	service.GetUserByType(context)
 }
-
+func getAllUsers(context *gin.Context) {
+	service.GetAllUsers(context)
+}
 func addUser(context *gin.Context) {
 	service.AddUser(context)
 }
@@ -207,6 +209,7 @@ func SetupRouter() *gin.Engine {
 		userApi.POST("/addUser", addUser)
 		userApi.POST("/updateUser", updateUser)
 		userApi.POST("/delUser", delUser)
+		userApi.GET("/getAllUsers", getAllUsers)
 	}
 
 	// 客户相关接口

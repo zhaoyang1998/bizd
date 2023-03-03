@@ -26,7 +26,9 @@ func AddClient(c *gin.Context) {
 		return
 	}
 	client.ClientId = uuid.NewV4().String()
-	client.PrincipalId = utils.GetCurrentUserId(c)
+	if client.PrincipalId == "" {
+		client.PrincipalId = utils.GetCurrentUserId(c)
+	}
 	result := global.DB.Create(&client)
 	if result.Error != nil {
 		log.Print(result.Error)

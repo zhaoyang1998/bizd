@@ -52,6 +52,16 @@ func GetUserDao(userAccount string, password string) (model.User, error) {
 	return user, nil
 }
 
+func GetAllUsers() []model.User {
+	var users []model.User
+	result := global.DB.Select("user_id,user_name").Order("updated_at desc").Find(&users)
+	if result.Error != nil {
+		log.Print(result.Error)
+		panic(model.MyError{Code: 400, Message: result.Error.Error()})
+	}
+	return users
+}
+
 func DelUserByKeys(del model.DelModel) error {
 	result := global.DB.Model(model.User{}).Delete("userId", del.Keys)
 	if result.Error != nil {

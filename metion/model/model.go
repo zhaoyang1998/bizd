@@ -14,23 +14,23 @@ type Conductor struct {
 
 type Client struct {
 	// 客户唯一编码
-	ClientId string `gorm:"primaryKey" json:"clientId" form:"clientId"`
+	ClientId string `gorm:"primaryKey" json:"clientId,omitempty" form:"clientId"`
 	// 客户名称
-	ClientName string `json:"clientName" form:"clientName" validate:"required"`
+	ClientName string `json:"clientName,omitempty" form:"clientName" validate:"required"`
 	// 客户简称
-	ClientAbbreviation string `json:"clientAbbreviation" form:"clientAbbreviation" validate:"required"`
+	ClientAbbreviation string `json:"clientAbbreviation,omitempty" form:"clientAbbreviation" validate:"required"`
 	// canvas账号
-	CanvasAccount string `json:"canvasAccount" form:"canvasAccount"`
+	CanvasAccount string `json:"canvasAccount,omitempty" form:"canvasAccount"`
 	// canvas密码
-	CanvasPwd string `json:"canvasPwd" form:"canvasPwd"`
+	CanvasPwd string `json:"canvasPwd,omitempty" form:"canvasPwd"`
 	// 客户资料连接
-	DataLink string `json:"dataLink" form:"dataLink"`
+	DataLink string `json:"dataLink,omitempty" form:"dataLink"`
 	// 负责人ID
-	PrincipalId   string `json:"principalId" form:"principalId"`
-	PrincipalName string `json:"principalName" form:"principalName" gorm:"->"`
+	PrincipalId   string `json:"principalId,omitempty" form:"principalId"`
+	PrincipalName string `json:"principalName,omitempty" form:"principalName" gorm:"->"`
 	// 客户状态： 实施未开始、进行中、已完成:10,11,12 POC未开始、进行中、已完成:20,21,22
-	Status     int    `json:"status" form:"status" validate:"required"`
-	StatusName string `json:"statusName" gorm:"-"`
+	Status     int    `json:"status,omitempty" form:"status" validate:"required"`
+	StatusName string `json:"statusName,omitempty" gorm:"-"`
 	UpdatedAt  int    `json:"updatedAt,-"`
 	// 分页参数
 	Pagination
@@ -38,45 +38,45 @@ type Client struct {
 
 type PointPosition struct {
 	// 单位ID
-	PointPositionId string `gorm:"primaryKey" json:"pointPositionId" form:"pointPositionId"`
+	PointPositionId string `gorm:"primaryKey" json:"pointPositionId,omitempty" form:"pointPositionId"`
 	// 单位名称
-	PointPositionName string `json:"pointPositionName" form:"pointPositionName" validate:"required"`
+	PointPositionName string `json:"pointPositionName,omitempty" form:"pointPositionName" validate:"required"`
 	// 所属客户ID
-	ClientId string `json:"clientId" form:"clientId" validate:"required"`
+	ClientId string `json:"clientId,omitempty" form:"clientId" validate:"required"`
 	// 客户名称
-	ClientAbbreviation string `json:"clientAbbreviation" form:"clientAbbreviation" gorm:"->"`
+	ClientAbbreviation string `json:"clientAbbreviation,omitempty" form:"clientAbbreviation" gorm:"->"`
 	// 创建者id
-	UserId string `json:"userId" form:"userId"`
+	UserId string `json:"userId,omitempty" form:"userId"`
 	// 创建者名称
-	UserName string `json:"userName" form:"userName" gorm:"->"`
+	UserName string `json:"userName,omitempty" form:"userName" gorm:"->"`
 	// 单位地址
-	Address string `json:"address" form:"address" validate:"required"`
+	Address string `json:"address,omitempty" form:"address" validate:"required"`
 	// ip规划
-	Ip string `json:"ip" form:"ip"`
+	Ip string `json:"ip,omitempty" form:"ip"`
 	// 实施类型 0：调研 1：正式实施 2：POC
-	Type *int `json:"type" form:"type" validate:"required"`
+	Type *int `json:"type,omitempty" form:"type" validate:"required"`
 	// 人数
-	PeopleNumbers *int `json:"peopleNumbers" form:"peopleNumbers"`
+	PeopleNumbers *int `json:"peopleNumbers,omitempty" form:"peopleNumbers"`
 	// 预计实施时间
-	ScheduledTime string `json:"scheduledTime" form:"scheduledTime"`
+	ScheduledTime string `json:"scheduledTime,omitempty" form:"scheduledTime"`
 	// 人员
-	ImplementerId string `json:"implementerId" form:"implementerId"`
+	ImplementerId string `json:"implementerId,omitempty" form:"implementerId"`
 	// 人员名称
-	ImplementerName string `json:"implementerName" form:"implementerName" gorm:"->"`
+	ImplementerName string `json:"implementerName,omitempty" form:"implementerName" gorm:"->"`
 	// CpeName
-	CpeName string `json:"cpeName" form:"cpeName"`
+	CpeName string `json:"cpeName,omitempty" form:"cpeName"`
 	// 状态，调研未开始、进行中、已完成:0,1,2 实施未开始、进行中、已完成:10,11,12 POC未开始、进行中、已完成:20,21,22
-	Status     *int   `gorm:"FORCE" json:"status" form:"status"`
-	StatusName string `gorm:"-" json:"statusName" form:"statusName"`
+	Status     *int   `gorm:"FORCE" json:"status,omitempty" form:"status"`
+	StatusName string `gorm:"-" json:"statusName,omitempty" form:"statusName"`
 	// 实施资链接
-	DataLink string `json:"dataLink" form:"dataLink"`
+	DataLink string `json:"dataLink,omitempty" form:"dataLink"`
 	// 备注
-	Remark string `json:"remark" form:"remark"`
+	Remark string `json:"remark,omitempty" form:"remark"`
 	// 开始时间
-	StartTime string `json:"startTime" form:"startTime"`
+	StartTime string `json:"startTime,omitempty" form:"startTime"`
 	// 结束时间
-	EndTime   string `json:"endTime" form:"endTime"`
-	TotalTime int    `json:"totalTime" form:"totalTime"`
+	EndTime   string `json:"endTime,omitempty" form:"endTime"`
+	TotalTime int    `json:"totalTime,omitempty" form:"totalTime"`
 	UpdatedAt int    `json:"updatedAt,-"`
 	// 分页参数
 	Pagination
@@ -84,22 +84,22 @@ type PointPosition struct {
 
 type User struct {
 	// 用户id
-	UserId string `gorm:"primaryKey" json:"userId" form:"userId"`
+	UserId string `gorm:"primaryKey" json:"userId,omitempty" form:"userId"`
 	// 账号
-	UserAccount string `json:"userAccount" form:"userAccount" validate:"required"`
+	UserAccount string `json:"userAccount,omitempty" form:"userAccount" validate:"required"`
 	// 用户名
-	UserName string `json:"userName" form:"userName" validate:"required"`
+	UserName string `json:"userName,omitempty" form:"userName" validate:"required"`
 	// 密码
-	UserPwd string `json:"userPwd" form:"userPwd" validate:"required"`
+	UserPwd string `json:"userPwd,omitempty" form:"userPwd" validate:"required"`
 	// 微信名称
-	WxName string `json:"wxName" form:"wxName" validate:"required"`
+	WxName string `json:"wxName,omitempty" form:"wxName" validate:"required"`
 	// 人员类型 1：交付 2：项目管理
-	Type     int    `json:"type" form:"type" validate:"required"`
-	TypeName string `json:"typeName" gorm:"-"`
+	Type     int    `json:"type,omitempty" form:"type" validate:"required"`
+	TypeName string `json:"typeName,omitempty" gorm:"-"`
 	// 优先级
-	Priority int `json:"priority" form:"priority"`
+	Priority int `json:"priority,omitempty" form:"priority"`
 	// 当前工作量
-	CurrentWorkload int `json:"currentWorkload" form:"currentWorkload"`
+	CurrentWorkload int `json:"currentWorkload,omitempty" form:"currentWorkload"`
 	UpdatedAt       int `json:"updatedAt,-"`
 	// 分页参数
 	Pagination
