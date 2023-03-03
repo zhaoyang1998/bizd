@@ -100,7 +100,7 @@ func GetEfficiencyDataDao(clientId string) (model.EchartsLine, error) {
 			return line, result.Error
 		}
 		for _, item := range tmp {
-			series[i].Data[3-item.Weeks] = int(item.Times)
+			series[i].Data[3-item.Weeks] = int(item.Times / 60)
 		}
 		for j := 1; j < len(series[i].Data); j++ {
 			if series[i].Data[j] == 0 {
