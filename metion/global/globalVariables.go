@@ -37,7 +37,7 @@ const (
 	UnImplemented = iota + 7
 	InImplemented
 	EndOfImplementation
-	UnPoc = iota + 17
+	UnPoc = iota + 14
 	InPoc
 	EndPoc
 )
