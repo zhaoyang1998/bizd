@@ -16,7 +16,7 @@ var User = "root"
 var Pwd = "baishan123"
 var Ip = "172.18.89.86"
 var Port = "3306"
-var DbName = "bizd_test"
+var DbName = "bizd"
 
 const (
 	TimeFormat              = "2006-01-02 15:04:05"
