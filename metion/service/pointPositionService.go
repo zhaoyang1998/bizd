@@ -207,6 +207,7 @@ func ExportExcel(c *gin.Context) {
 		var search model.Search
 		_ = c.ShouldBindJSON(&search)
 		pointPositions := dao.GetPointPositionsDao(search)
+		utils.TranPointPositionStatus(pointPositions)
 		utils.WriteToExcel(c, pointPositions)
 		msg.Code = 200
 		msg.Message = "请求成功"
