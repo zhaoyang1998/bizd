@@ -16,7 +16,7 @@ var User = "root"
 var Pwd = "baishan123"
 var Ip = "172.18.89.86"
 var Port = "3306"
-var DbName = "bizd"
+var DbName = "bizd_test"
 
 const (
 	TimeFormat              = "2006-01-02 15:04:05"
@@ -26,6 +26,10 @@ const (
 	AssignmentStartTag      = "开始提醒"
 	AssignmentNotStartedTag = "超时未开始提醒"
 	WxUrlKey                = "WxUrl"
+)
+const (
+	SheetName = "实施详情"
+	ExcelName = "实施详情"
 )
 
 type ClientAndPointPositionStatus int

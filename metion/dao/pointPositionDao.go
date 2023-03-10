@@ -37,6 +37,20 @@ func GetPointPositionDao(position model.PointPosition) (model.ResponsePagination
 	return pagination, pointPositions, nil
 }
 
+func GetPointPositionsDao(search model.Search) []model.PointPosition {
+	var pointPositions []model.PointPosition
+	result := global.DB.Joins("left join t_user on t_user.user_id = t_point_position.implementer_id").
+		Joins("left join t_user t1 on t1.user_id = t_point_position.user_id").
+		Joins("left join t_client client on client.client_id = t_point_position.client_id").
+		Select("t_point_position.*, t_user.user_name as implementer_name, t1.user_name as user_name, client.client_abbreviation as client_abbreviation").
+		Where("point_position_name LIKE ? or address LIKE ? or cpe_name LIKE ? or ip LIKE ?", "%"+search.Keyword+"%", "%"+search.Keyword+"%", "%"+search.Keyword+"%", "%"+search.Keyword+"%").Order("updated_at desc").Find(&pointPositions)
+	if result.Error != nil {
+		log.Print(result.Error)
+		panic(model.MyError{Code: 400, Message: result.Error.Error()})
+	}
+	return pointPositions
+}
+
 func GetPointPositionByKeywordDao(search model.Search) (model.ResponsePagination, []model.PointPosition, error) {
 	if search.PageSize == 0 {
 		search.PageSize = 10
@@ -70,6 +84,7 @@ func DelPointPositionByKeys(del model.DelModel) error {
 		return nil
 	}
 }
+
 func FinishAssignmentDao(pointPosition model.PointPosition) error {
 	tx := global.DB.Begin()
 	var tmp int64

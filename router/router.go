@@ -237,6 +237,7 @@ func SetupRouter() *gin.Engine {
 		pointPositionApi.GET("/finishAssignment/:pointPositionId", finishAssignment)
 		pointPositionApi.POST("/allocatingAssignment", allocatingAssignment)
 		pointPositionApi.POST("/cancelAssignment", cancelAssignment)
+		pointPositionApi.POST("/exportExcel", exportExcel)
 	}
 	// 单位相关接口
 
@@ -253,6 +254,10 @@ func SetupRouter() *gin.Engine {
 		detailApi.POST("/saveDetail", saveDetail)
 	}
 	return r
+}
+
+func exportExcel(context *gin.Context) {
+	service.ExportExcel(context)
 }
 
 func saveDetail(context *gin.Context) {

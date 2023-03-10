@@ -200,3 +200,20 @@ func AllocatingAssignment(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, response)
 }
+
+func ExportExcel(c *gin.Context) {
+	var msg model.Response
+	utils.Try(func() {
+		var search model.Search
+		_ = c.ShouldBindJSON(&search)
+		pointPositions := dao.GetPointPositionsDao(search)
+		utils.WriteToExcel(c, pointPositions)
+		msg.Code = 200
+		msg.Message = "请求成功"
+	}, func(err interface{}) {
+		res, _ := err.(model.MyError)
+		msg.Message = res.Message
+		msg.Code = res.Code
+	})
+	c.JSON(http.StatusOK, msg)
+}
