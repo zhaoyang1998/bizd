@@ -4,7 +4,9 @@ import (
 	"bizd/metion/global"
 	"bizd/metion/model"
 	"bizd/metion/timedTask"
+	"context"
 	"fmt"
+	"github.com/go-redis/redis/v8"
 	"github.com/jakecoffman/cron"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -33,6 +35,7 @@ func Inits() {
 	_ = GormDB()
 	initCron()
 	initSystemParameters()
+	initRedis()
 	return
 }
 func initSystemParameters() {
@@ -47,4 +50,22 @@ func initCron() {
 	global.Tasks.CronTask = cron.New()
 	timedTask.InitCron()
 	go global.Tasks.CronTask.Start()
+}
+
+func initRedis() {
+	// 创建Redis客户端
+	global.RedisCli = redis.NewClient(&redis.Options{
+		Addr:     global.RedisIp + ":" + global.RedisPort,
+		Password: global.RedisPwd, // Redis无密码的话，这里为空
+		DB:       global.RedisDb,
+	})
+
+	// 测试连接是否成功
+	_, err := global.RedisCli.Ping(context.Background()).Result()
+	if err != nil {
+		fmt.Printf("redis连接失败：%v\n", err)
+	} else {
+		fmt.Println("redis数据库连接成功")
+	}
+
 }

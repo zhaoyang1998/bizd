@@ -2,6 +2,7 @@ package global
 
 import (
 	"bizd/metion/model"
+	"github.com/go-redis/redis/v8"
 	"gorm.io/gorm"
 )
 
@@ -17,6 +18,12 @@ var Pwd = "baishan123"
 var Ip = "172.18.89.86"
 var Port = "3306"
 var DbName = "bizd_test"
+
+var RedisPwd = "baishan123"
+var RedisIp = "172.18.89.54"
+var RedisPort = "6379"
+var RedisDb = 0
+var RedisCli = &redis.Client{}
 
 const (
 	TimeFormat              = "2006-01-02 15:04:05"

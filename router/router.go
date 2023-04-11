@@ -259,6 +259,7 @@ func SetupRouter() *gin.Engine {
 		// 富文本展示页面
 		//documentApi.LoadHTMLGlob("templates/*.html")
 		documentApi.POST("/saveFile", saveDocumentFile)
+		documentApi.POST("/getDoc", getDocument)
 	}
 	return r
 }
@@ -277,4 +278,8 @@ func getAllDetail(context *gin.Context) {
 
 func saveDocumentFile(context *gin.Context) {
 	service.SaveDocumentFile(context)
+}
+func getDocument(context *gin.Context) {
+	service.GetDoc(context)
+
 }
