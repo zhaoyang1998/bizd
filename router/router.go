@@ -239,7 +239,6 @@ func SetupRouter() *gin.Engine {
 		pointPositionApi.POST("/cancelAssignment", cancelAssignment)
 		pointPositionApi.POST("/exportExcel", exportExcel)
 	}
-	// 单位相关接口
 
 	commonApi := r.Group("/common")
 	{
