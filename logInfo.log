@@ -3,3 +3,21 @@
 2023/01/10 00:39:00 信息发送成功，内容：test机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=dc1c77f1-914a-44ce-afd3-d3f2306540ef
 2023/01/10 00:40:00 信息发送成功，内容：test机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=dc1c77f1-914a-44ce-afd3-d3f2306540ef
 2023/01/10 00:40:00 信息发送成功，内容：test机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=dc1c77f1-914a-44ce-afd3-d3f2306540ef
+2023/02/02 15:07:38 Panic info is: 生产token的方法不对
+2023/02/02 15:08:34 Panic info is: 生产token的方法不对
+2023/02/02 15:08:57 Panic info is: 生产token的方法不对
+2023/02/02 15:12:20 Panic info is: 生产token的方法不对
+2023/02/02 15:15:09 Panic info is: 生产token的方法不对
+2023/02/02 15:21:16 Panic info is: 生产token的方法不对
+2023/02/02 15:21:35 Panic info is: 生产token的方法不对
+2023/02/02 15:58:42 Panic info is: 生产token的方法不对
+2023/02/02 16:02:19 Panic info is: 生产token的方法不对
+2023/02/02 16:02:22 Panic info is: 生产token的方法不对
+2023/02/02 16:02:22 Panic info is: 生产token的方法不对
+2023/02/02 16:03:16 Panic info is: 生产token的方法不对
+2023/04/11 00:35:58 dial tcp 172.18.89.86:3306: connect: operation timed out
+2023/04/11 00:35:58 dial tcp 172.18.89.86:3306: connect: operation timed out
+2023/04/11 00:51:06 dial tcp 172.18.89.86:3306: connect: operation timed out
+2023/04/11 00:51:06 dial tcp 172.18.89.86:3306: connect: operation timed out
+2023/04/11 00:51:28 dial tcp 172.18.89.86:3306: connect: operation timed out
+2023/04/11 00:51:28 dial tcp 172.18.89.86:3306: connect: operation timed out

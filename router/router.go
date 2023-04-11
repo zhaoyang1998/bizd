@@ -252,6 +252,13 @@ func SetupRouter() *gin.Engine {
 		detailApi.GET("/getAllDetail/:id", getAllDetail)
 		detailApi.POST("/saveDetail", saveDetail)
 	}
+
+	documentApi := r.Group("/document")
+	{
+		// 富文本展示页面
+		//documentApi.LoadHTMLGlob("templates/*.html")
+		documentApi.POST("/saveFile", saveDocumentFile)
+	}
 	return r
 }
 
@@ -265,4 +272,8 @@ func saveDetail(context *gin.Context) {
 
 func getAllDetail(context *gin.Context) {
 	service.GetAllDetail(context)
+}
+
+func saveDocumentFile(context *gin.Context) {
+	service.SaveDocumentFile(context)
 }
