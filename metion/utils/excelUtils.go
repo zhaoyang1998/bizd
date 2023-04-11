@@ -22,7 +22,7 @@ func WriteToExcel(c *gin.Context, data []model.PointPosition) {
 		var err error
 		if i == -1 {
 			err = file.SetSheetRow(tmpSheetName, fmt.Sprintf("A%d", i+2), &[]interface{}{
-				"客户名称", "单位名称", "地址", "人数", "实施人员", "设备别名", "状态", "负责人", "资料链接", "预计实施时间", "实施开始时间", "实施结束时间", "备注"})
+				"客户名称", "单位名称", "地址", "人数", "实施人员", "IP段", "设备别名", "状态", "负责人", "资料链接", "预计实施时间", "实施开始时间", "实施结束时间", "备注"})
 		} else {
 			var tmp string
 			if data[i].PeopleNumbers == nil {
@@ -31,7 +31,7 @@ func WriteToExcel(c *gin.Context, data []model.PointPosition) {
 				tmp = strconv.Itoa(*data[i].PeopleNumbers)
 			}
 			err = file.SetSheetRow(tmpSheetName, fmt.Sprintf("A%d", i+2), &[]interface{}{data[i].ClientAbbreviation, data[i].PointPositionName, data[i].Address,
-				tmp, data[i].ImplementerName, data[i].CpeName, data[i].StatusName, data[i].UserName, data[i].DataLink,
+				tmp, data[i].ImplementerName, data[i].Ip, data[i].CpeName, data[i].StatusName, data[i].UserName, data[i].DataLink,
 				data[i].ScheduledTime, data[i].StartTime, data[i].EndTime, data[i].Remark})
 		}
 		if err != nil {

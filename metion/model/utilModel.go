@@ -25,6 +25,7 @@ type ResponsePagination struct {
 
 type Search struct {
 	Keyword string `json:"keyword"`
+	PointPosition
 	Pagination
 }
 type DelModel struct {
