@@ -26,10 +26,15 @@ func SaveDocumentFile(c *gin.Context) {
 
 	// 在这里可以将 formData.Content 和 formData.TableData 保存到数据库或者文件中
 	// ...
-	err = ioutil.WriteFile("test.doc", []byte(formData.Content), 0644) // 写入文件
+	//创建文件目录
+
+	err = os.MkdirAll(global.DataDir+formData.Customer, os.ModePerm)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		fmt.Printf("创建目录失败:%v", err)
+	}
+	err = ioutil.WriteFile(global.DataDir+formData.Customer+"/"+formData.Title+".doc", []byte(formData.Content), 0644) // 写入文件
+	if err != nil {
+		fmt.Printf("新建文件失败:%v", err)
 	}
 
 	err = postFileToRedis(formData)

@@ -12,7 +12,6 @@ var MySigningKey = []byte("Key of BIZD")
 var ExpiresTime int64 = 60 * 60 * 24
 var Issuer = "BIZD" // token签发人
 // 数据库信息
-
 var User = "root"
 var Pwd = "baishan123"
 var Ip = "172.18.89.86"
@@ -24,6 +23,9 @@ var RedisIp = "172.18.89.54"
 var RedisPort = "6379"
 var RedisDb = 0
 var RedisCli = &redis.Client{}
+
+//数据目录
+var DataDir = "./data/bizd/"
 
 const (
 	TimeFormat              = "2006-01-02 15:04:05"
