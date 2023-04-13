@@ -11,9 +11,10 @@ import (
 )
 
 type FormData struct {
-	Content  string `json:"content"`
-	Title    string `json:"title"`
-	Customer string `json:"customer"`
+	Content         string `json:"content"`
+	Title           string `json:"title"`
+	Customer        string `json:"customer"`
+	PointPositionId string `json:"pointPositionId"`
 }
 
 func SaveDocumentFile(c *gin.Context) {
@@ -49,7 +50,7 @@ func SaveDocumentFile(c *gin.Context) {
 
 //把文件内容放在redis中
 func postFileToRedis(formData FormData) error {
-	err := global.RedisCli.Set(context.Background(), formData.Customer+"/"+formData.Title, formData.Content, 0).Err()
+	err := global.RedisCli.Set(context.Background(), formData.PointPositionId, formData.Content, 0).Err()
 	if err != nil {
 		return err
 	}
@@ -64,10 +65,14 @@ func GetDoc(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	get := global.RedisCli.Get(context.Background(), formData.Customer+"/"+formData.Title).Val()
+	get := global.RedisCli.Get(context.Background(), formData.PointPositionId).Val()
 
-	fmt.Println(formData.Customer + "/" + formData.Title)
+	fmt.Println(formData.Customer + "/" + formData.Title + ":" + formData.PointPositionId)
 	fmt.Println(get)
 	c.JSON(http.StatusOK, gin.H{"code": 200, "data": get})
 
 }
+
+//获取所有的实施文档列表 api接口
+
+//删除实施文档
