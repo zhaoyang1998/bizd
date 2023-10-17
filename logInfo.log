@@ -3,21 +3,370 @@
 2023/01/10 00:39:00 信息发送成功，内容：test机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=dc1c77f1-914a-44ce-afd3-d3f2306540ef
 2023/01/10 00:40:00 信息发送成功，内容：test机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=dc1c77f1-914a-44ce-afd3-d3f2306540ef
 2023/01/10 00:40:00 信息发送成功，内容：test机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=dc1c77f1-914a-44ce-afd3-d3f2306540ef
-2023/02/02 15:07:38 Panic info is: 生产token的方法不对
-2023/02/02 15:08:34 Panic info is: 生产token的方法不对
-2023/02/02 15:08:57 Panic info is: 生产token的方法不对
-2023/02/02 15:12:20 Panic info is: 生产token的方法不对
-2023/02/02 15:15:09 Panic info is: 生产token的方法不对
-2023/02/02 15:21:16 Panic info is: 生产token的方法不对
-2023/02/02 15:21:35 Panic info is: 生产token的方法不对
-2023/02/02 15:58:42 Panic info is: 生产token的方法不对
-2023/02/02 16:02:19 Panic info is: 生产token的方法不对
-2023/02/02 16:02:22 Panic info is: 生产token的方法不对
-2023/02/02 16:02:22 Panic info is: 生产token的方法不对
-2023/02/02 16:03:16 Panic info is: 生产token的方法不对
-2023/04/11 00:35:58 dial tcp 172.18.89.86:3306: connect: operation timed out
-2023/04/11 00:35:58 dial tcp 172.18.89.86:3306: connect: operation timed out
-2023/04/11 00:51:06 dial tcp 172.18.89.86:3306: connect: operation timed out
-2023/04/11 00:51:06 dial tcp 172.18.89.86:3306: connect: operation timed out
-2023/04/11 00:51:28 dial tcp 172.18.89.86:3306: connect: operation timed out
-2023/04/11 00:51:28 dial tcp 172.18.89.86:3306: connect: operation timed out
+2023/01/31 17:20:19 Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+2023/02/02 11:51:19 Panic info is: 生产token的方法不对
+2023/02/02 11:54:27 Panic info is: 生产token的方法不对
+2023/02/02 11:54:31 Panic info is: 生产token的方法不对
+2023/02/02 11:54:33 Panic info is: 生产token的方法不对
+2023/02/02 11:54:35 Panic info is: 生产token的方法不对
+2023/02/02 11:54:51 Panic info is: 生产token的方法不对
+2023/02/02 11:54:51 Panic info is: 生产token的方法不对
+2023/02/02 11:54:51 Panic info is: 生产token的方法不对
+2023/02/02 11:55:33 Panic info is: 生产token的方法不对
+2023/02/02 11:55:37 Panic info is: 生产token的方法不对
+2023/02/02 14:11:18 Panic info is: 生产token的方法不对
+2023/02/02 14:11:19 Panic info is: 生产token的方法不对
+2023/02/02 14:11:21 Panic info is: 生产token的方法不对
+2023/02/02 14:11:22 Panic info is: 生产token的方法不对
+2023/02/02 14:11:22 Panic info is: 生产token的方法不对
+2023/02/02 14:11:22 Panic info is: 生产token的方法不对
+2023/02/02 14:11:22 Panic info is: 生产token的方法不对
+2023/02/02 14:11:22 Panic info is: 生产token的方法不对
+2023/02/02 14:11:22 Panic info is: 生产token的方法不对
+2023/02/02 14:11:29 Panic info is: 生产token的方法不对
+2023/02/02 14:11:29 Panic info is: 生产token的方法不对
+2023/02/02 14:11:29 Panic info is: 生产token的方法不对
+2023/02/02 14:11:29 Panic info is: 生产token的方法不对
+2023/02/02 14:11:33 Panic info is: 生产token的方法不对
+2023/02/02 14:11:43 Panic info is: 生产token的方法不对
+2023/02/02 14:11:44 Panic info is: 生产token的方法不对
+2023/02/02 14:11:44 Panic info is: 生产token的方法不对
+2023/02/02 14:11:44 Panic info is: 生产token的方法不对
+2023/02/02 14:11:50 Panic info is: 生产token的方法不对
+2023/02/02 14:11:51 Panic info is: 生产token的方法不对
+2023/02/02 14:11:51 Panic info is: 生产token的方法不对
+2023/02/02 14:11:51 Panic info is: 生产token的方法不对
+2023/02/02 14:11:51 Panic info is: 生产token的方法不对
+2023/02/02 14:11:53 Panic info is: 生产token的方法不对
+2023/02/02 14:11:53 Panic info is: 生产token的方法不对
+2023/02/02 14:11:53 Panic info is: 生产token的方法不对
+2023/02/02 14:11:53 Panic info is: 生产token的方法不对
+2023/02/02 14:12:07 Panic info is: 生产token的方法不对
+2023/02/02 14:12:24 Panic info is: 生产token的方法不对
+2023/02/02 14:13:34 Panic info is: 生产token的方法不对
+2023/02/13 11:08:44 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+Key: 'PointPosition.Type' Error:Field validation for 'Type' failed on the 'required' tag
+Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/13 11:09:27 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+Key: 'PointPosition.Type' Error:Field validation for 'Type' failed on the 'required' tag
+Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/13 11:10:21 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+Key: 'PointPosition.Type' Error:Field validation for 'Type' failed on the 'required' tag
+Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/13 11:10:31 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+2023/02/13 11:17:42 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+Key: 'PointPosition.Type' Error:Field validation for 'Type' failed on the 'required' tag
+Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/13 11:20:12 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+Key: 'PointPosition.Type' Error:Field validation for 'Type' failed on the 'required' tag
+Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/13 11:20:27 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+Key: 'PointPosition.Type' Error:Field validation for 'Type' failed on the 'required' tag
+Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/13 14:32:28 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+Key: 'PointPosition.Type' Error:Field validation for 'Type' failed on the 'required' tag
+Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/13 14:33:44 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+Key: 'PointPosition.Type' Error:Field validation for 'Type' failed on the 'required' tag
+Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/13 14:33:56 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+Key: 'PointPosition.Type' Error:Field validation for 'Type' failed on the 'required' tag
+Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/13 14:35:13 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+Key: 'PointPosition.Type' Error:Field validation for 'Type' failed on the 'required' tag
+Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/13 14:35:16 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+Key: 'PointPosition.Type' Error:Field validation for 'Type' failed on the 'required' tag
+Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/13 14:35:18 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+Key: 'PointPosition.Type' Error:Field validation for 'Type' failed on the 'required' tag
+Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/13 14:38:59 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+Key: 'PointPosition.Type' Error:Field validation for 'Type' failed on the 'required' tag
+Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/13 14:39:31 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+Key: 'PointPosition.Type' Error:Field validation for 'Type' failed on the 'required' tag
+Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/13 14:39:39 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+Key: 'PointPosition.Type' Error:Field validation for 'Type' failed on the 'required' tag
+Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/13 15:43:40 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+2023/02/13 15:43:42 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+2023/02/13 15:43:45 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+2023/02/13 15:58:55 Key: 'Client.PrincipalId' Error:Field validation for 'PrincipalId' failed on the 'required' tag
+2023/02/13 15:59:03 Key: 'Client.PrincipalId' Error:Field validation for 'PrincipalId' failed on the 'required' tag
+2023/02/13 15:59:05 Key: 'Client.PrincipalId' Error:Field validation for 'PrincipalId' failed on the 'required' tag
+2023/02/13 15:59:05 Key: 'Client.PrincipalId' Error:Field validation for 'PrincipalId' failed on the 'required' tag
+2023/02/13 15:59:06 Key: 'Client.PrincipalId' Error:Field validation for 'PrincipalId' failed on the 'required' tag
+2023/02/13 15:59:06 Key: 'Client.PrincipalId' Error:Field validation for 'PrincipalId' failed on the 'required' tag
+2023/02/13 15:59:07 Key: 'Client.PrincipalId' Error:Field validation for 'PrincipalId' failed on the 'required' tag
+2023/02/13 15:59:08 Key: 'Client.PrincipalId' Error:Field validation for 'PrincipalId' failed on the 'required' tag
+2023/02/13 15:59:08 Key: 'Client.PrincipalId' Error:Field validation for 'PrincipalId' failed on the 'required' tag
+2023/02/13 15:59:24 Key: 'Client.PrincipalId' Error:Field validation for 'PrincipalId' failed on the 'required' tag
+2023/02/13 16:03:06 Key: 'Client.PrincipalId' Error:Field validation for 'PrincipalId' failed on the 'required' tag
+2023/02/13 16:04:59 Key: 'Client.PrincipalId' Error:Field validation for 'PrincipalId' failed on the 'required' tag
+2023/02/13 16:05:05 Key: 'Client.PrincipalId' Error:Field validation for 'PrincipalId' failed on the 'required' tag
+2023/02/13 16:13:21 Key: 'Client.PrincipalId' Error:Field validation for 'PrincipalId' failed on the 'required' tag
+2023/02/13 16:39:00 Key: 'Client.PrincipalId' Error:Field validation for 'PrincipalId' failed on the 'required' tag
+2023/02/13 16:44:40 Key: 'Client.Status' Error:Field validation for 'Status' failed on the 'required' tag
+2023/02/13 16:44:42 Key: 'Client.Status' Error:Field validation for 'Status' failed on the 'required' tag
+2023/02/13 16:44:45 Key: 'Client.Status' Error:Field validation for 'Status' failed on the 'required' tag
+2023/02/14 10:52:40 WHERE conditions required
+2023/02/14 10:53:27 WHERE conditions required
+2023/02/14 10:54:28 unsupported data type: &[]: Table not set, please set it like: db.Model(&user) or db.Table("users")
+2023/02/14 11:28:41 Error 1054 (42S22): Unknown column 'principal_name' in 'field list'
+2023/02/14 11:50:54 Error 1054 (42S22): Unknown column 'user.user_id' in 'on clause'
+2023/02/14 11:51:00 Error 1054 (42S22): Unknown column 'user.user_id' in 'on clause'
+2023/02/14 11:51:02 Error 1054 (42S22): Unknown column 'user.user_id' in 'on clause'
+2023/02/14 11:51:02 Error 1054 (42S22): Unknown column 'user.user_id' in 'on clause'
+2023/02/14 14:25:49 Error 1054 (42S22): Unknown column 'principal_name' in 'field list'
+2023/02/14 14:25:52 Error 1054 (42S22): Unknown column 'principal_name' in 'field list'
+2023/02/14 15:03:41 Error 1054 (42S22): Unknown column 'principal_name' in 'field list'
+2023/02/14 15:03:51 Error 1054 (42S22): Unknown column 'principal_name' in 'field list'
+2023/02/14 16:56:51 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:26:34 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:28:13 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:28:47 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:29:46 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:29:51 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:30:35 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:30:47 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:31:44 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:31:53 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:32:49 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:32:51 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:32:51 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:32:51 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:32:51 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:32:52 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:32:52 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:32:52 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:32:52 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:32:52 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:32:53 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:33:34 Key: 'User.Type' Error:Field validation for 'Type' failed on the 'required' tag
+2023/02/14 17:43:22 invalid connection
+2023/02/14 17:43:22 invalid connection
+2023/02/14 17:59:46 Error 1062 (23000): Duplicate entry '3' for key 't_user.account'
+2023/02/14 18:00:00 Error 1062 (23000): Duplicate entry '4' for key 't_user.account'
+2023/02/15 11:00:48 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+2023/02/15 11:29:03 Key: 'PointPosition.PointPositionName' Error:Field validation for 'PointPositionName' failed on the 'required' tag
+Key: 'PointPosition.ClientId' Error:Field validation for 'ClientId' failed on the 'required' tag
+Key: 'PointPosition.Address' Error:Field validation for 'Address' failed on the 'required' tag
+2023/02/15 11:45:37 Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/15 11:45:43 Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/15 11:45:46 Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/15 11:45:47 Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/15 11:45:48 Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/15 12:04:27 Key: 'PointPosition.PeopleNumbers' Error:Field validation for 'PeopleNumbers' failed on the 'required' tag
+2023/02/15 18:27:32 WHERE conditions required
+2023/02/15 18:29:30 WHERE conditions required
+2023/02/15 18:32:49 WHERE conditions required
+2023/02/15 18:34:32 WHERE conditions required
+2023/02/15 18:35:45 WHERE conditions required
+2023/02/15 18:45:15 Error 1054 (42S22): Unknown column 'point.pointPositionId' in 'where clause'
+2023/02/16 10:14:37 Error 1054 (42S22): Unknown column 'point.pointPositionId' in 'where clause'
+2023/02/16 10:17:24 Error 1054 (42S22): Unknown column 'point.pointPositionId' in 'where clause'
+2023/02/16 10:20:12 Error 1054 (42S22): Unknown column 'point.pointPositionId' in 'where clause'
+2023/02/16 10:21:38 Error 1054 (42S22): Unknown column 'point.point_position_id' in 'where clause'
+2023/02/16 10:22:27 Error 1054 (42S22): Unknown column 't_point_position.point_position_id' in 'where clause'
+2023/02/16 10:28:03 WHERE conditions required
+2023/02/16 10:31:31 WHERE conditions required
+2023/02/16 10:38:03 WHERE conditions required
+2023/02/16 10:41:58 WHERE conditions required
+2023/02/16 10:43:29 WHERE conditions required
+2023/02/16 10:46:40 WHERE conditions required
+2023/02/16 10:48:31 Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT `implementer_id` FROM `t_point_position` WHERE `point_position_id` = ?' at line 1
+2023/02/16 10:51:18 Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT `implementer_id` FROM `t_point_position` WHERE `point_position_id` = ?' at line 1
+2023/02/16 10:52:30 Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT `implementer_id` FROM `t_point_position` WHERE `point_position_id` = ?' at line 1
+2023/02/16 11:09:17 WHERE conditions required
+2023/02/16 11:11:27 WHERE conditions required
+2023/02/16 11:14:13 WHERE conditions required
+2023/02/16 11:15:02 WHERE conditions required
+2023/02/16 11:19:06 WHERE conditions required
+2023/02/16 11:20:33 WHERE conditions required
+2023/02/16 11:21:46 Error 1054 (42S22): Unknown column 'pp.point_position_id' in 'where clause'
+2023/02/16 11:28:36 Error 1054 (42S22): Unknown column 'pp.point_position_id' in 'where clause'
+2023/02/16 11:30:07 Error 1054 (42S22): Unknown column 'pp.point_position_id' in 'where clause'
+2023/02/16 11:48:06 Error 1054 (42S22): Unknown column 'lk' in 'where clause'
+2023/02/16 11:49:10 Error 1054 (42S22): Unknown column 'lk' in 'where clause'
+2023/02/16 11:51:05 Error 1054 (42S22): Unknown column 'lk' in 'where clause'
+2023/02/16 11:54:46 Error 1054 (42S22): Unknown column 'lk' in 'where clause'
+2023/02/16 11:55:03 Error 1054 (42S22): Unknown column 'lk' in 'where clause'
+2023/02/16 11:55:07 Error 1054 (42S22): Unknown column 'lk' in 'where clause'
+2023/02/16 14:57:53 信息发送成功，内容：中检-大理-分配提醒
+实施时间：<font color='#dd0000'>2023-02-16 14:58:36</font>
+<@jin.luo>机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3d9df143-f9fa-4353-9685-002f11f82d52
+2023/02/16 14:59:00 信息发送成功，内容：中检-大理-超时未开始提醒
+实施时间：<font color='#dd0000'>2023-02-16 14:58:36</font>
+<@jin.luo>机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3d9df143-f9fa-4353-9685-002f11f82d52
+2023/02/16 14:59:30 信息发送成功，内容：中检-大理-超时未开始提醒
+实施时间：<font color='#dd0000'>2023-02-16 14:58:36</font>
+<@jin.luo>机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3d9df143-f9fa-4353-9685-002f11f82d52
+2023/02/16 15:22:55 信息发送成功，内容：中检-大理-分配提醒
+实施时间：<font color='#dd0000'>2023-02-15 00:00:00</font>
+<@jin.luo>机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3d9df143-f9fa-4353-9685-002f11f82d52
+2023/02/16 15:56:25 Panic info is: reflect: reflect.Value.Set using unaddressable value
+2023/02/16 15:56:44 Panic info is: reflect: reflect.Value.Set using unaddressable value
+2023/02/16 15:57:20 Panic info is: reflect: reflect.Value.Set using unaddressable value
+2023/02/16 15:57:34 Panic info is: reflect: reflect.Value.Set using unaddressable value
+2023/02/16 15:58:50 Panic info is: runtime error: invalid memory address or nil pointer dereference
+2023/02/16 16:01:04 Panic info is: runtime error: invalid memory address or nil pointer dereference
+2023/02/16 16:02:03 信息发送成功，内容：中检-西藏-分配提醒
+实施时间：<font color='#dd0000'>2023-02-16 16:02:49</font>
+<@jin.luo>机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3d9df143-f9fa-4353-9685-002f11f82d52
+2023/02/16 16:03:00 Panic info is: runtime error: invalid memory address or nil pointer dereference
+2023/02/16 16:03:31 信息发送成功，内容：中检-大理-分配提醒
+实施时间：<font color='#dd0000'></font>
+<@jin.luo>机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3d9df143-f9fa-4353-9685-002f11f82d52
+2023/02/16 16:04:56 Panic info is: runtime error: invalid memory address or nil pointer dereference
+2023/02/16 16:08:15 信息发送成功，内容：中检-大理-分配提醒
+实施时间：<font color='#dd0000'>2023-02-16 16:09:00</font>
+<@jin.luo>机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3d9df143-f9fa-4353-9685-002f11f82d52
+2023/02/16 16:39:34 Panic info is: runtime error: invalid memory address or nil pointer dereference
+2023/02/16 16:40:01 Panic info is: runtime error: invalid memory address or nil pointer dereference
+2023/02/17 10:50:28 读取menu.json文件失败
+2023/02/17 10:50:47 读取menu.json文件失败
+2023/02/17 10:52:10 读取menu.json文件失败
+2023/02/17 10:52:57 读取menu.json文件失败
+2023/02/17 10:54:43 读取menu.json文件失败
+2023/02/17 10:58:13 读取menu.json文件失败
+2023/02/17 10:59:06 读取menu.json文件失败
+2023/02/17 11:00:21 读取menu.json文件失败
+2023/02/17 11:02:26 读取menu.json文件失败
+2023/02/17 15:19:29 信息发送成功，内容：冶金-济南-分配提醒
+实施时间：<font color='#dd0000'>2023-02-17 15:18:21</font>
+<@jin.luo>机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3d9df143-f9fa-4353-9685-002f11f82d52
+2023/02/17 15:26:47 信息发送成功，内容：冶金-济南-分配提醒
+实施时间：<font color='#dd0000'>2023-02-17 15:25:39</font>
+<@jin.luo>机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3d9df143-f9fa-4353-9685-002f11f82d52
+2023/02/17 15:58:51 Error 1406 (22001): Data too long for column 'user_id' at row 1
+2023/02/17 15:58:52 Panic info is: runtime error: invalid memory address or nil pointer dereference
+2023/02/17 15:58:55 Error 1406 (22001): Data too long for column 'user_id' at row 1
+2023/02/17 15:58:55 Panic info is: runtime error: invalid memory address or nil pointer dereference
+2023/02/17 16:01:39 Error 1406 (22001): Data too long for column 'user_id' at row 1
+2023/02/17 16:01:39 Panic info is: runtime error: invalid memory address or nil pointer dereference
+2023/02/17 16:01:45 Error 1406 (22001): Data too long for column 'user_id' at row 1
+2023/02/17 16:01:45 Panic info is: runtime error: invalid memory address or nil pointer dereference
+2023/02/17 16:50:24 unsupported data type: 0xc0003d2a50: Table not set, please set it like: db.Model(&user) or db.Table("users")
+2023/02/17 16:50:39 unsupported data type: 0xc0005acb70: Table not set, please set it like: db.Model(&user) or db.Table("users")
+2023/02/17 16:51:16 unsupported data type: 0xc0003d2bd0: Table not set, please set it like: db.Model(&user) or db.Table("users")
+2023/02/20 10:36:30 unsupported data type: 0xc00002be88: Table not set, please set it like: db.Model(&user) or db.Table("users")
+2023/02/20 10:37:49 Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT client_id FROM `t_point_position` WHERE point_position_id and status % 10' at line 1
+2023/02/20 11:14:43 Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT client_id FROM `t_point_position` WHERE point_position_id and status % 10' at line 1
+2023/02/20 11:19:28 Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT client_id FROM `t_point_position` WHERE point_position_id = ? and status ' at line 1
+2023/02/20 11:23:50 Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT client_id FROM `t_point_position` WHERE point_position_id = ? and status ' at line 1
+2023/02/20 11:27:12 Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT client_id FROM `t_point_position` WHERE point_position_id = ? and status ' at line 1
+2023/02/20 11:57:19 Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT client_id FROM `t_point_position` WHERE point_position_id = ?' at line 1
+2023/02/20 12:03:05 Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '('t_point_position').Select('client_id').Where('point_position_id = ?', pointPos' at line 1
+2023/02/20 14:03:23 Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT client_id FROM `t_point_position` WHERE point_position_id = ?' at line 1
+2023/02/20 14:32:42 Error 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT client_id FROM `t_point_position` WHERE point_position_id = (?)' at line 1
+2023/02/20 16:24:02 Error 1054 (42S22): Unknown column 'total_time ' in 'field list'
+2023/02/20 16:26:11 Error 1054 (42S22): Unknown column 'total_time ' in 'field list'
+2023/02/20 16:27:18 Error 1054 (42S22): Unknown column 'total_time ' in 'field list'
+2023/02/20 18:06:27 Error 1054 (42S22): Unknown column 'total_time ' in 'field list'
+2023/02/20 18:08:17 Error 1054 (42S22): Unknown column 'total_time ' in 'field list'
+2023/02/20 18:08:28 Error 1054 (42S22): Unknown column 'total_time ' in 'field list'
+2023/02/20 18:09:15 Error 1054 (42S22): Unknown column 'total_time ' in 'field list'
+2023/02/20 18:11:08 Error 1054 (42S22): Unknown column 'total_time ' in 'field list'
+2023/02/20 18:12:47 信息发送成功，内容：中检-大海-分配提醒
+实施时间：<font color='#dd0000'>2023-02-20 18:11:46</font>
+<@jin.luo>机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3d9df143-f9fa-4353-9685-002f11f82d52
+2023/02/20 18:14:53 Error 1054 (42S22): Unknown column 'total_time ' in 'field list'
+2023/02/21 14:57:38 Panic info is: runtime error: index out of range [0] with length 0
+2023/02/21 14:57:55 Panic info is: runtime error: index out of range [0] with length 0
+2023/02/21 14:57:58 Panic info is: runtime error: index out of range [0] with length 0
+2023/02/21 14:58:26 Panic info is: runtime error: index out of range [0] with length 0
+2023/02/21 17:22:33 Panic info is: runtime error: index out of range [0] with length 0
+2023/02/21 17:22:40 Panic info is: runtime error: index out of range [0] with length 0
+2023/02/21 17:23:06 Panic info is: runtime error: index out of range [0] with length 0
+2023/02/21 17:24:43 Panic info is: runtime error: index out of range [0] with length 0
+2023/02/21 17:25:09 Panic info is: runtime error: index out of range [0] with length 0
+2023/02/21 17:25:42 Panic info is: runtime error: index out of range [0] with length 0
+2023/02/23 10:42:33 Panic info is: reflect: reflect.Value.SetInt using unaddressable value
+2023/02/23 10:42:56 Panic info is: reflect: reflect.Value.SetInt using unaddressable value
+2023/02/23 10:43:35 Panic info is: reflect: reflect.Value.SetInt using unaddressable value
+2023/02/23 10:44:03 Panic info is: reflect: reflect.Value.SetInt using unaddressable value
+2023/02/23 10:46:26 Panic info is: reflect: reflect.Value.SetInt using unaddressable value
+2023/02/23 10:55:05 Panic info is: reflect: reflect.Value.SetInt using unaddressable value
+2023/02/23 10:55:07 Panic info is: reflect: reflect.Value.SetInt using unaddressable value
+2023/02/23 10:55:07 Panic info is: reflect: reflect.Value.SetInt using unaddressable value
+2023/02/23 10:56:38 Error 1052 (23000): Column 'updated_at' in order clause is ambiguous
+2023/02/23 10:56:38 Error 1052 (23000): Column 'updated_at' in order clause is ambiguous
+2023/02/23 10:57:10 Error 1052 (23000): Column 'updated_at' in order clause is ambiguous
+2023/02/23 10:57:10 Error 1052 (23000): Column 'updated_at' in order clause is ambiguous
+2023/02/27 18:18:00 信息发送成功，内容：中检-西藏-开始提醒
+实施时间：<font color='#dd0000'>2023-02-27 18:19:00</font>
+<@jin.luo>机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3d9df143-f9fa-4353-9685-002f11f82d52
+2023/02/27 18:18:33 信息发送成功，内容：中检-西藏-分配提醒
+实施时间：<font color='#dd0000'>2023-02-27 18:19:00</font>
+<@jin.luo>机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3d9df143-f9fa-4353-9685-002f11f82d52
+2023/03/01 14:32:13 读取menu.json文件失败C:\Users\yrway\AppData\Local\Temp\GoLand
+2023/03/03 16:06:43 信息发送成功，内容：1-分配提醒
+实施时间：<font color='#dd0000'>2023-03-03 16:05:42</font>
+<@xian.wang>机器人地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3d9df143-f9fa-4353-9685-002f11f82d52
+2023/03/03 16:23:14 invalid connection
+2023/04/20 10:56:02 Error 1054 (42S22): Unknown column 't_point_position.keyword' in 'where clause'
+2023/04/20 10:56:02 Error 1054 (42S22): Unknown column 't_point_position.keyword' in 'where clause'
+2023/04/20 10:56:02 Error 1054 (42S22): Unknown column 't_point_position.keyword' in 'where clause'
+2023/04/20 10:56:02 Error 1054 (42S22): Unknown column 't_point_position.keyword' in 'where clause'
+2023/04/20 10:56:25 Error 1054 (42S22): Unknown column 't_point_position.keyword' in 'where clause'
+2023/04/20 10:56:25 Error 1054 (42S22): Unknown column 't_point_position.keyword' in 'where clause'
+2023/04/20 10:56:34 Error 1054 (42S22): Unknown column 't_point_position.keyword' in 'where clause'
+2023/04/20 10:56:34 Error 1054 (42S22): Unknown column 't_point_position.keyword' in 'where clause'
+2023/04/20 10:58:39 Error 1054 (42S22): Unknown column 't_point_position.keyword' in 'where clause'
+2023/04/20 10:58:39 Error 1054 (42S22): Unknown column 't_point_position.keyword' in 'where clause'
+2023/10/17 10:59:05 Error 1052 (23000): Column 'status' in where clause is ambiguous
+2023/10/17 10:59:05 Error 1052 (23000): Column 'status' in where clause is ambiguous
+2023/10/17 10:59:09 Error 1052 (23000): Column 'status' in where clause is ambiguous
+2023/10/17 10:59:09 Error 1052 (23000): Column 'status' in where clause is ambiguous
+2023/10/17 11:00:00 Error 1052 (23000): Column 'status' in where clause is ambiguous
+2023/10/17 11:00:00 Error 1052 (23000): Column 'status' in where clause is ambiguous
+2023/10/17 11:04:23 Error 1052 (23000): Column 'status' in where clause is ambiguous
+2023/10/17 11:04:23 Error 1052 (23000): Column 'status' in where clause is ambiguous
+2023/10/17 11:38:15 Error 1052 (23000): Column 'client_id' in where clause is ambiguous
+2023/10/17 11:38:15 Error 1052 (23000): Column 'client_id' in where clause is ambiguous
+2023/10/17 11:38:23 Error 1052 (23000): Column 'client_id' in where clause is ambiguous
+2023/10/17 11:38:23 Error 1052 (23000): Column 'client_id' in where clause is ambiguous
+2023/10/17 11:39:38 Error 1052 (23000): Column 'status' in where clause is ambiguous
+2023/10/17 11:39:38 Error 1052 (23000): Column 'status' in where clause is ambiguous

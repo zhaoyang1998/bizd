@@ -24,7 +24,9 @@ type ResponsePagination struct {
 }
 
 type Search struct {
-	Keyword string `json:"keyword"`
+	Keyword string `json:"keyword" gorm:"-"`
+	ETime   string `json:"eTime" gorm:"-"`
+	STime   string `json:"sTime" gorm:"-"`
 	PointPosition
 	Pagination
 }
@@ -132,4 +134,9 @@ type MyError struct {
 	Code    int
 	Message string
 	Error   error
+}
+
+type StatusText struct {
+	Name  string
+	Value int
 }

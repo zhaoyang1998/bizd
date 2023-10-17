@@ -2,12 +2,14 @@ package service
 
 import (
 	"bizd/metion/dao"
+	"bizd/metion/global"
 	"bizd/metion/model"
 	"bizd/metion/utils"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"net/http"
+	"sort"
 )
 
 func GetHomePageData(c *gin.Context) {
@@ -52,6 +54,7 @@ func GetHomePageData(c *gin.Context) {
 	msg.Data = string(tmp)
 	c.JSON(http.StatusOK, msg)
 }
+
 func GetMenuJson(c *gin.Context) {
 	var response model.Response
 	dataByte, err := ioutil.ReadFile("./static/menu.json")
@@ -70,4 +73,26 @@ func GetMenuJson(c *gin.Context) {
 		response.Message = "文件错误"
 	}
 	c.JSON(http.StatusOK, response)
+}
+
+func GetAllStatus(c *gin.Context) {
+	var msg model.Response
+	utils.Try(func() {
+		var statusList []model.StatusText
+		for key, value := range global.ClientAndPointPositionStatusText {
+			statusList = append(statusList, model.StatusText{Name: value, Value: int(key)})
+		}
+		sort.Slice(statusList, func(i, j int) bool {
+			return statusList[i].Value < statusList[j].Value
+		})
+		msg.Code = 200
+		msg.Message = "请求成功"
+		tmp, _ := json.Marshal(statusList)
+		msg.Data = string(tmp)
+	}, func(err interface{}) {
+		res, _ := err.(model.MyError)
+		msg.Message = res.Message
+		msg.Code = res.Code
+	})
+	c.JSON(http.StatusOK, msg)
 }

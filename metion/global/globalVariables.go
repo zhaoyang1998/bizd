@@ -11,12 +11,12 @@ var Tasks *model.Task
 var MySigningKey = []byte("Key of BIZD")
 var ExpiresTime int64 = 60 * 60 * 24
 var Issuer = "BIZD" // token签发人
-// 数据库信息
+// User 数据库信息
 var User = "root"
 var Pwd = "baishan123"
-var Ip = "172.18.89.86"
+var Ip = "172.18.89.54"
 var Port = "3306"
-var DbName = "bizd_test"
+var DbName = "test"
 
 var RedisPwd = "baishan123"
 var RedisIp = "172.18.89.54"
@@ -24,7 +24,7 @@ var RedisPort = "6379"
 var RedisDb = 0
 var RedisCli = &redis.Client{}
 
-//数据目录
+// DataDir 数据目录
 var DataDir = "./data/bizd/"
 
 const (
@@ -35,6 +35,7 @@ const (
 	AssignmentStartTag      = "开始提醒"
 	AssignmentNotStartedTag = "超时未开始提醒"
 	WxUrlKey                = "WxUrl"
+	DefaultTime             = "1991-01-01 00:00"
 )
 const (
 	SheetName = "实施详情"
@@ -44,13 +45,13 @@ const (
 type ClientAndPointPositionStatus int
 
 const (
-	UnResearched = iota
+	UnResearched = iota + 10
 	InResearched
 	EndOfResearched
-	UnImplemented = iota + 7
+	UnImplemented = iota + 17
 	InImplemented
 	EndOfImplementation
-	UnPoc = iota + 14
+	UnPoc = iota + 24
 	InPoc
 	EndPoc
 )

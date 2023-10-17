@@ -245,6 +245,7 @@ func SetupRouter() *gin.Engine {
 		//commonApi.Use(Authorize())
 		commonApi.GET("/getHomePageData/:clientId", getHomePageData)
 		commonApi.GET("/getMenuJson", getMenuJson)
+		commonApi.GET("getAllStatus", getAllStatus)
 	}
 
 	detailApi := r.Group("/details")
@@ -261,6 +262,10 @@ func SetupRouter() *gin.Engine {
 		documentApi.POST("/getDoc", getDocument)
 	}
 	return r
+}
+
+func getAllStatus(context *gin.Context) {
+	service.GetAllStatus(context)
 }
 
 func exportExcel(context *gin.Context) {

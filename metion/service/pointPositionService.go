@@ -68,6 +68,12 @@ func GetPointPositionByKeyword(c *gin.Context) {
 	var pointPositions []model.PointPosition
 	var pagination model.ResponsePagination
 	var err error
+	if search.STime == "" {
+		search.STime = global.DefaultTime
+	}
+	if search.ETime == "" {
+		search.ETime = utils.GetNowTime()
+	}
 	pagination, pointPositions, err = dao.GetPointPositionByKeywordDao(search)
 	if err != nil {
 		log.Print(err)
