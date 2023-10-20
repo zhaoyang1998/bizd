@@ -11,6 +11,9 @@ import (
 	uuid "github.com/satori/go.uuid"
 	"log"
 	"net/http"
+	"reflect"
+	"strconv"
+	"strings"
 )
 
 func AddPointPosition(c *gin.Context) {
@@ -27,7 +30,7 @@ func AddPointPosition(c *gin.Context) {
 	pointPosition.PointPositionId = uuid.NewV4().String()
 	pointPosition.UserId = utils.GetCurrentUserId(c)
 	var tmp = *pointPosition.Type * 10
-	pointPosition.Status = &tmp
+	pointPosition.Status = tmp
 	result := global.DB.Create(&pointPosition)
 	if result.Error != nil {
 		log.Print(result.Error)
@@ -68,11 +71,11 @@ func GetPointPositionByKeyword(c *gin.Context) {
 	var pointPositions []model.PointPosition
 	var pagination model.ResponsePagination
 	var err error
-	if search.STime == "" {
-		search.STime = global.DefaultTime
+	if search.STime == 0 {
+		search.STime = utils.TimeFormatToUnix(global.DefaultTime)
 	}
-	if search.ETime == "" {
-		search.ETime = utils.GetNowTime()
+	if search.ETime == 0 {
+		search.ETime = utils.TimeFormatToUnix(utils.GetNowTimeMinute())
 	}
 	pagination, pointPositions, err = dao.GetPointPositionByKeywordDao(search)
 	if err != nil {
@@ -116,9 +119,9 @@ func UpdatePointPosition(c *gin.Context) {
 	var response model.Response
 	var pointPosition model.PointPosition
 	_ = c.ShouldBindJSON(&pointPosition)
-	if pointPosition.Type != nil && *pointPosition.Status%10 == 0 {
+	if pointPosition.Type != nil && pointPosition.Status%10 == 0 {
 		var tmp = *pointPosition.Type * 10
-		pointPosition.Status = &tmp
+		pointPosition.Status = tmp
 	}
 	result := global.DB.Model(&pointPosition).Updates(&pointPosition).Update("status", pointPosition.Status)
 	if result.Error != nil {
@@ -212,9 +215,9 @@ func ExportExcel(c *gin.Context) {
 	utils.Try(func() {
 		var search model.Search
 		_ = c.ShouldBindJSON(&search)
-		pointPositions := dao.GetPointPositionsDao(search)
+		pointPositions := dao.GetExportPointPositionsDao(search)
 		utils.TranPointPositionStatus(pointPositions)
-		utils.WriteToExcel(c, pointPositions)
+		utils.WriteToExcel(c, ExportExclPointPosition(pointPositions, search.Selected))
 		msg.Code = 200
 		msg.Message = "请求成功"
 	}, func(err interface{}) {
@@ -223,4 +226,48 @@ func ExportExcel(c *gin.Context) {
 		msg.Code = res.Code
 	})
 	c.JSON(http.StatusOK, msg)
+}
+
+func ExportExclPointPosition(pointPositions []model.PointPosition, selected []string) [][]string {
+	var data [][]string
+	var rowTmp []string
+	for _, item := range selected {
+		tmp := global.PointPositionToText[item]
+		rowTmp = append(rowTmp, tmp)
+	}
+	rowTmp = append(rowTmp, "概览")
+	rowTmp = append(rowTmp, "总耗时/min")
+	data = append(data, rowTmp)
+	rowsCount := len(pointPositions)
+	for i := 0; i < rowsCount; i++ {
+		var row []string
+		for _, item := range selected {
+			tmp := ""
+			v := reflect.ValueOf(pointPositions[i])
+			fieldValue := v.FieldByName(strings.Title(item))
+			if fieldValue.IsValid() {
+				tmp = fieldValue.Interface().(string)
+			}
+			row = append(row, tmp)
+		}
+		details := dao.GetAllDetail(pointPositions[i].PointPositionId)
+		if len(details) > 0 {
+			tmp := ""
+			for j, item := range details {
+				if j < len(details)-1 {
+					tmp += item.StartTime + "-" + item.EndTime + ":" + item.Desc
+				}
+				if j < len(details)-2 {
+					tmp += "\n"
+				}
+			}
+			row = append(row, tmp)
+			tmp = ""
+			time := (utils.TimeFormatToUnix(details[len(details)-1].StartTime) - utils.TimeFormatToUnix(details[0].StartTime)) / 60
+			tmp += strconv.FormatInt(time, 10)
+			row = append(row, tmp)
+		}
+		data = append(data, row)
+	}
+	return data
 }

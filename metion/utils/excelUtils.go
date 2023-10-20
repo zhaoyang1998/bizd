@@ -7,33 +7,31 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/xuri/excelize/v2"
 	"net/url"
-	"strconv"
 )
 
-func WriteToExcel(c *gin.Context, data []model.PointPosition) {
+func WriteToExcel(c *gin.Context, data [][]string) {
 	tmpSheetName := global.SheetName
 	file := excelize.NewFile()
 	sheetIndex, _ := file.NewSheet(tmpSheetName)
+	style, _ := file.NewStyle(&excelize.Style{
+		Alignment: &excelize.Alignment{
+			Horizontal:      "center",
+			Indent:          1,
+			JustifyLastLine: true,
+			ReadingOrder:    2,
+			RelativeIndent:  1,
+			ShrinkToFit:     true,
+			Vertical:        "top",
+			WrapText:        true,
+		},
+	})
 	file.SetActiveSheet(sheetIndex) // 默认sheet
-	_ = file.DeleteSheet("Sheet1")  // 删除默认创建的sheet页
-	rowsCount := len(data)
-
-	for i := -1; i < rowsCount; i++ {
+	_ = file.SetColWidth(global.SheetName, "N", "N", 150)
+	_ = file.DeleteSheet("Sheet1") // 删除默认创建的sheet页
+	_ = file.SetCellStyle(global.SheetName, "A1", "A1", style)
+	for i, item := range data {
 		var err error
-		if i == -1 {
-			err = file.SetSheetRow(tmpSheetName, fmt.Sprintf("A%d", i+2), &[]interface{}{
-				"客户名称", "单位名称", "地址", "人数", "实施人员", "IP段", "设备别名", "状态", "负责人", "资料链接", "预计实施时间", "实施开始时间", "实施结束时间", "备注"})
-		} else {
-			var tmp string
-			if data[i].PeopleNumbers == nil {
-				tmp = ""
-			} else {
-				tmp = strconv.Itoa(*data[i].PeopleNumbers)
-			}
-			err = file.SetSheetRow(tmpSheetName, fmt.Sprintf("A%d", i+2), &[]interface{}{data[i].ClientAbbreviation, data[i].PointPositionName, data[i].Address,
-				tmp, data[i].ImplementerName, data[i].Ip, data[i].CpeName, data[i].StatusName, data[i].UserName, data[i].DataLink,
-				data[i].ScheduledTime, data[i].StartTime, data[i].EndTime, data[i].Remark})
-		}
+		err = file.SetSheetRow(tmpSheetName, fmt.Sprintf("A%d", i+1), &item)
 		if err != nil {
 			panic(model.MyError{Code: 400, Message: err.Error()})
 			return

@@ -7,7 +7,6 @@ import (
 	"bizd/metion/model"
 	"bizd/metion/utils"
 	"encoding/json"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	uuid "github.com/satori/go.uuid"
@@ -169,13 +168,11 @@ func Login(c *gin.Context) {
 func GetAllUsers(c *gin.Context) {
 	var msg model.Response
 	utils.Try(func() {
-		// 将map编码为JSON
-		jsonData, err := json.Marshal(global.ClientAndPointPositionStatusText)
-		if err != nil {
-			log.Print("JSON编码错误:", err)
-			return
-		}
-		fmt.Println(string(jsonData))
+		users := dao.GetAllUsers()
+		msg.Code = 200
+		msg.Message = "请求成功"
+		tmp, _ := json.Marshal(users)
+		msg.Data = string(tmp)
 	}, func(err interface{}) {
 		res, _ := err.(model.MyError)
 		msg.Message = res.Message

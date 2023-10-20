@@ -79,7 +79,7 @@ func encapsulationTask(cron model.MsgFromCron) error {
 	var pointPosition model.PointPosition
 	pointPosition.PointPositionId = cron.PointPositionId
 	_ = global.DB.Find(&pointPosition)
-	if *pointPosition.Status%10 != 0 {
+	if pointPosition.Status%10 != 0 {
 		return nil
 	}
 	var tmp model.MsgFromCron
@@ -89,7 +89,7 @@ func encapsulationTask(cron model.MsgFromCron) error {
 	tmp.ScheduledTime = cron.ScheduledTime
 	tmp.Name = strings.Replace(cron.Name, "-3", "-2-", -1) + global.AssignmentNotStartedTag
 	tmp.Type = 2
-	tmp.CronTime = "0/30 * * * * *"
+	tmp.CronTime = "* /10 * * * *"
 	tmp.PointPositionId = cron.PointPositionId
 	global.DB.Create(tmp)
 	err := AddTask(tmp)

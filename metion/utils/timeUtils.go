@@ -11,6 +11,11 @@ func GetNowTime() string {
 	return timeString
 }
 
+func GetNowTimeMinute() string {
+	timeString := time.Now().Format(global.TimeMinuteFormat)
+	return timeString
+}
+
 func GetCurDayTime() string {
 	t := time.Now()
 	tm := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
@@ -61,6 +66,6 @@ func GetPrevWeeksStartAndEnd(num int) string {
 
 func TimeFormatToUnix(timeFormat string) int64 {
 	local, _ := time.LoadLocation("Local")
-	locationDatetime, _ := time.ParseInLocation(global.TimeFormat, timeFormat, local)
+	locationDatetime, _ := time.ParseInLocation(global.TimeMinuteFormat, timeFormat, local)
 	return locationDatetime.Unix()
 }

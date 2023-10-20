@@ -55,8 +55,6 @@ type PointPosition struct {
 	Ip string `json:"ip,omitempty" form:"ip"`
 	// 实施类型 0：调研 1：正式实施 2：POC
 	Type *int `json:"type,omitempty" form:"type" validate:"required"`
-	// 人数
-	PeopleNumbers *int `json:"peopleNumbers,omitempty" form:"peopleNumbers"`
 	// 预计实施时间
 	ScheduledTime string `json:"scheduledTime,omitempty" form:"scheduledTime"`
 	// 人员
@@ -65,8 +63,8 @@ type PointPosition struct {
 	ImplementerName string `json:"implementerName,omitempty" form:"implementerName" gorm:"->"`
 	// CpeName
 	CpeName string `json:"cpeName,omitempty" form:"cpeName"`
-	// 状态，调研未开始、进行中、已完成:0,1,2 实施未开始、进行中、已完成:10,11,12 POC未开始、进行中、已完成:20,21,22
-	Status     *int   `gorm:"FORCE" json:"status,omitempty" form:"status"`
+	// 状态，调研未开始、进行中、已完成:10,11,12 实施未开始、进行中、已完成:20,21,22 POC未开始、进行中、已完成:30,31,32
+	Status     int    `gorm:"FORCE" json:"status,omitempty" form:"status"`
 	StatusName string `gorm:"-" json:"statusName,omitempty" form:"statusName"`
 	// 实施资链接
 	DataLink string `json:"dataLink,omitempty" form:"dataLink"`

@@ -29,6 +29,7 @@ var DataDir = "./data/bizd/"
 
 const (
 	TimeFormat              = "2006-01-02 15:04:05"
+	TimeMinuteFormat        = "2006-01-02 15:04"
 	TimeDayFormat           = "2006-01-02"
 	WxUrlDefault            = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3d9df143-f9fa-4353-9685-002f11f82d52"
 	AllocatingAssignmentTag = "分配提醒"
@@ -66,6 +67,22 @@ var ClientAndPointPositionStatusText = map[ClientAndPointPositionStatus]string{
 	UnPoc:               "POC未开始",
 	InPoc:               "POC进行中",
 	EndPoc:              "POC结束",
+}
+
+var PointPositionToText = map[string]string{
+	"clientAbbreviation": "客户",
+	"pointPositionName":  "点位名称",
+	"address":            "地址",
+	"ip":                 "IP网段",
+	"dataLink":           "资料连接",
+	"cpeName":            "设备别名",
+	"statusName":         "状态",
+	"scheduledTime":      "预计实施时间",
+	"startTime":          "开始时间",
+	"endTime":            "结束时间",
+	"remark":             "备注",
+	"userName":           "负责人",
+	"implementerName":    "实施人",
 }
 
 type UserType int

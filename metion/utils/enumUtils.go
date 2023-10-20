@@ -52,7 +52,7 @@ func TranUserType(users []model.User) {
 
 func TranPointPositionStatus(pps []model.PointPosition) {
 	for i, pp := range pps {
-		switch *pp.Status {
+		switch pp.Status {
 		case global.UnResearched:
 			pps[i].StatusName = global.ClientAndPointPositionStatusText[global.UnResearched]
 			break
