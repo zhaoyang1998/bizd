@@ -64,7 +64,7 @@ func GetPointPositionByKeywordDao(search model.Search) (model.ResponsePagination
 		Joins("left join t_client client on client.client_id = t_point_position.client_id").
 		Select("t_point_position.*, t_user.user_name as implementer_name, t1.user_name as user_name, client.client_abbreviation as client_abbreviation").
 		Offset((search.PageNumber-1)*search.PageSize).Limit(search.PageSize).
-		Where(search).Where("UNIX_TIMESTAMP(start_time) >= ? AND UNIX_TIMESTAMP(start_time) <= ?", search.STime, search.ETime).
+		Where(search).Where("UNIX_TIMESTAMP(start_time) >= ? AND UNIX_TIMESTAMP(start_time) <= ?", search.Stime, search.Etime).
 		Where("point_position_name LIKE ? or address LIKE ? or cpe_name LIKE ? or ip LIKE ?", "%"+search.Keyword+"%", "%"+search.Keyword+"%", "%"+search.Keyword+"%", "%"+search.Keyword+"%").
 		Order("updated_at desc").Find(&pointPositions)
 	if result.Error != nil {
@@ -74,7 +74,7 @@ func GetPointPositionByKeywordDao(search model.Search) (model.ResponsePagination
 	result = global.DB.Model(model.PointPosition{}).Joins("left join t_user on t_user.user_id = t_point_position.implementer_id").
 		Joins("left join t_user t1 on t1.user_id = t_point_position.user_id").
 		Joins("left join t_client client on client.client_id = t_point_position.client_id").
-		Where(search).Where("UNIX_TIMESTAMP(start_time) >= ? AND UNIX_TIMESTAMP(start_time) <= ?", search.STime, search.ETime).
+		Where(search).Where("UNIX_TIMESTAMP(start_time) >= ? AND UNIX_TIMESTAMP(start_time) <= ?", search.Stime, search.Etime).
 		Where("point_position_name LIKE ? or address LIKE ? or cpe_name LIKE ? or ip LIKE ?", "%"+search.Keyword+"%", "%"+search.Keyword+"%", "%"+search.Keyword+"%", "%"+search.Keyword+"%").
 		Count(&totalTmp)
 	pagination = utils.EncapsulationPage(search.PageNumber, search.PageSize, totalTmp)

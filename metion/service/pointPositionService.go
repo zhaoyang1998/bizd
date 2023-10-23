@@ -71,11 +71,15 @@ func GetPointPositionByKeyword(c *gin.Context) {
 	var pointPositions []model.PointPosition
 	var pagination model.ResponsePagination
 	var err error
-	if search.STime == 0 {
-		search.STime = utils.TimeFormatToUnix(global.DefaultTime)
+	if search.STime == "" {
+		search.Stime = utils.TimeFormatToUnix(global.DefaultTime)
+	} else {
+		search.Stime, _ = strconv.ParseInt(search.STime, 10, 64)
 	}
-	if search.ETime == 0 {
-		search.ETime = utils.TimeFormatToUnix(utils.GetNowTimeMinute())
+	if search.ETime == "" {
+		search.Etime = utils.TimeFormatToUnix(utils.GetNowTimeMinute())
+	} else {
+		search.Etime, _ = strconv.ParseInt(search.ETime, 10, 64)
 	}
 	pagination, pointPositions, err = dao.GetPointPositionByKeywordDao(search)
 	if err != nil {

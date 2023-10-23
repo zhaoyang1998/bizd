@@ -26,8 +26,10 @@ type ResponsePagination struct {
 type Search struct {
 	Keyword  string   `json:"keyword" gorm:"-"`
 	Ids      []string `json:"ids" gorm:"-"`
-	ETime    int64    `json:"eTime" gorm:"-"`
-	STime    int64    `json:"sTime" gorm:"-"`
+	ETime    string   `json:"eTime" gorm:"-"`
+	STime    string   `json:"sTime" gorm:"-"`
+	Etime    int64    `gorm:"-"`
+	Stime    int64    `gorm:"-"`
 	Selected []string `json:"selected" gorm:"-"`
 	PointPosition
 	Pagination
