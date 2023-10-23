@@ -16,7 +16,7 @@ var User = "root"
 var Pwd = "baishan123"
 var Ip = "172.18.89.54"
 var Port = "3306"
-var DbName = "test"
+var DbName = "bizd"
 
 var RedisPwd = "baishan123"
 var RedisIp = "172.18.89.54"
