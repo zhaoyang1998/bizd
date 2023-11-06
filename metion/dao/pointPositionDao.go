@@ -64,7 +64,7 @@ func GetPointPositionByKeywordDao(search model.Search) (model.ResponsePagination
 		Joins("left join t_client client on client.client_id = t_point_position.client_id").
 		Select("t_point_position.*, t_user.user_name as implementer_name, t1.user_name as user_name, client.client_abbreviation as client_abbreviation").
 		Offset((search.PageNumber-1)*search.PageSize).Limit(search.PageSize).
-		Where(search).Where("UNIX_TIMESTAMP(start_time) >= ? AND UNIX_TIMESTAMP(start_time) <= ?", search.Stime, search.Etime).
+		Where(search).Where("UNIX_TIMESTAMP(CONVERT_TZ(start_time, '+08:00', '+00:00')) >= ? AND UNIX_TIMESTAMP(CONVERT_TZ(start_time, '+08:00', '+00:00')) <= ?", search.Stime, search.Etime).
 		Where("point_position_name LIKE ? or address LIKE ? or cpe_name LIKE ? or ip LIKE ?", "%"+search.Keyword+"%", "%"+search.Keyword+"%", "%"+search.Keyword+"%", "%"+search.Keyword+"%").
 		Order("updated_at desc").Find(&pointPositions)
 	if result.Error != nil {
