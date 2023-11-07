@@ -38,7 +38,7 @@ func WriteToExcel(c *gin.Context, data [][]string) {
 		}
 	}
 	_ = file.Close()
-	fileName := url.QueryEscape(global.ExcelName + ".xls")
+	fileName := url.QueryEscape(global.ExcelName + ".xlsx")
 	Write(c, fileName, file)
 }
 
