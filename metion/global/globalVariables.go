@@ -74,7 +74,7 @@ var PointPositionToText = map[string]string{
 	"pointPositionName":  "点位名称",
 	"address":            "地址",
 	"ip":                 "IP网段",
-	"dataLink":           "资料连接",
+	"dataLink":           "资料链接",
 	"cpeName":            "设备别名",
 	"statusName":         "状态",
 	"scheduledTime":      "预计实施时间",

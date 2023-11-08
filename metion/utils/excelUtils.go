@@ -38,11 +38,12 @@ func WriteToExcel(c *gin.Context, data [][]string) {
 		}
 	}
 	_ = file.Close()
-	fileName := url.QueryEscape(global.ExcelName + ".xls")
+	fileName := url.QueryEscape(global.ExcelName + ".xlsx")
 	Write(c, fileName, file)
 }
 
 func Write(ctx *gin.Context, fileName string, file *excelize.File) {
+
 	ctx.Writer.Header().Add("Access-Control-Expose-Headers", "Content-Disposition")
 	ctx.Writer.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename*=utf-8''%s", fileName))
 	ctx.Writer.Header().Add("Content-Type", "application/octet-stream;charset=UTF-8")
