@@ -72,7 +72,7 @@ func GetPointPositionByKeyword(c *gin.Context) {
 	var pagination model.ResponsePagination
 	var err error
 	if search.STime == "" {
-		search.Stime = utils.TimeFormatToUnix(global.DefaultTime)
+		search.Stime = 0
 	} else {
 		search.Stime, _ = strconv.ParseInt(search.STime, 10, 64)
 	}

@@ -13,7 +13,7 @@ func GetTotalDataByClientDao(clientId string) (model.EchartsPie, error) {
 	pie := utils.InitPie()
 	var data []model.EchartsPieData
 	result := global.DB.Model(model.PointPosition{}).Select("status as name, count(*) as value").
-		Where("client_id = ? and type = 1", clientId).Group("status").Find(&data)
+		Where("client_id = ? ", clientId).Group("status").Find(&data)
 	if result.Error != nil {
 		log.Print(result.Error)
 		return pie, result.Error
@@ -41,7 +41,7 @@ func GetCurDataByClientDao(clientId string) (model.EchartsPie, error) {
 	pie := utils.InitPie()
 	var data []model.EchartsPieData
 	result := global.DB.Model(model.PointPosition{}).Select("status as name, count(*) as value").
-		Where("client_id = ? and type = 1 and scheduled_time >= ? and scheduled_time < ?", clientId, utils.GetCurDayTime(), utils.GetNextDayTime()).Group("status").Find(&data)
+		Where("client_id = ? and scheduled_time >= ? and scheduled_time < ?", clientId, utils.GetCurDayTime(), utils.GetNextDayTime()).Group("status").Find(&data)
 	if result.Error != nil {
 		log.Print(result.Error)
 		return pie, result.Error

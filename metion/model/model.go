@@ -53,7 +53,7 @@ type PointPosition struct {
 	Address string `json:"address,omitempty" form:"address" validate:"required"`
 	// ip规划
 	Ip string `json:"ip,omitempty" form:"ip"`
-	// 实施类型 0：调研 1：正式实施 2：POC
+	// 实施类型 1：调研 2：正式实施 3：POC
 	Type *int `json:"type,omitempty" form:"type" validate:"required"`
 	// 预计实施时间
 	ScheduledTime string `json:"scheduledTime,omitempty" form:"scheduledTime"`
