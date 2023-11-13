@@ -37,7 +37,14 @@ func SaveDetailDao(details []model.ImplementDetails) {
 		}
 		ids = append(ids, item.ImplementDetailId)
 	}
-	result := tx.Where("point_position_id = ? and implement_detail_id not in ?", details[0].PointPositionId, ids).
+	var begin = utils.TimeFormatToUnix(details[0].StartTime)
+	var total = utils.TimeFormatToUnix(details[len(details)-1].StartTime) - begin
+	result := tx.Model(&model.PointPosition{PointPositionId: details[0].PointPositionId}).Update("total_time", total)
+	if result.Error != nil {
+		tx.Rollback()
+		panic(model.MyError{Code: 400, Message: result.Error.Error()})
+	}
+	result = tx.Where("point_position_id = ? and implement_detail_id not in ?", details[0].PointPositionId, ids).
 		Delete(model.ImplementDetails{})
 	if result.Error != nil {
 		tx.Rollback()
